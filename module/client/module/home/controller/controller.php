@@ -15,4 +15,12 @@ switch($_GET['op']){
 
     break;
 
+    case 'usertype';
+
+        changeUsertype();
+        echo json_encode("true");
+        exit;
+
+    break;
+
 }

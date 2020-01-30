@@ -43,7 +43,7 @@
             <i class="fas fa-id-card-alt big_icon"></i>
             <span data-tr="Contact Us" class="no-minibar">Contact Us</span>
         </div>
-        <div class="button_VerticalMenu_canvas " onclick="location.href='index.php?type=client'">
+        <div class="button_VerticalMenu_canvas" id="menu-login">
             <i class="fas fa-id-card-alt big_icon"></i>
             <span data-tr="Client View" class="no-minibar"></span>
         </div>

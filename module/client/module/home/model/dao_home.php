@@ -12,3 +12,19 @@ function getTop10Films(){ //Get all data from Films
     return $query->fetchAll(PDO::FETCH_OBJ);
     
 }
+
+function getUsertype(){ //Get actual user
+    $connection = new connection();
+    $query = $connection->prepare('SELECT usertype FROM auth where id=1');
+    $query->execute();
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ); 
+}
+
+function changeUsertype(){//(TITLE, DIRECTOR, DATE)
+    $connection = new connection();
+    $query = $connection->prepare('UPDATE auth SET usertype = "admin"  WHERE id = 1');
+    $query->execute();
+    $data = $query->fetch();
+    $connection = null;
+}

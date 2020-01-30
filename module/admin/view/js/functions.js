@@ -2,6 +2,24 @@
 $( document ).ready(function() {
     var dropdown = document.getElementsByClassName("dropdown_button");
 
+    $( '#menu-login' ).on( "click", function() {
+        $.ajax({
+            type: 'GET',
+            url: '/movieshop/module/admin/module/films/controller/controller_films.php?op=usertype',
+            dataType: 'json',
+            
+            
+            done: function (data) { //$data es toda la informacion que nos retorna el ajax
+              //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
+                location.href="index.php";
+            },
+            error: function(){
+                location.href="index.php";
+            }
+        });
+    });
+
+
     for (i = 0; i < dropdown.length; i++) {
 
         $( dropdown[i] ).on( "click", function() {

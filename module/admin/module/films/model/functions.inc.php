@@ -32,8 +32,8 @@
 		return $return=array('resultado'=>true,'error'=>$error,'datos'=>$resultado);
     }
     
-    function debug($array){
+    /*function debug($array){
 		echo "<pre>";
 		print_r($array);
 		echo "</pre><br>";
-	}
+	}*/

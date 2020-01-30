@@ -16,10 +16,11 @@
 
         break;
 
-        case 'test';
-            print_r("entra controller_films");
-            die;
-
+        case 'usertype';
+        
+            changeUsertype();
+            echo json_encode("true");
+            exit;
 
         break;
 

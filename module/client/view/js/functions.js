@@ -38,8 +38,22 @@ $(document).ready(function(){
     );
 
     $('#header-login').on('click', function() {
-        console.log("aassbb");
-        location.href="index.php?type=admin";
+
+        $.ajax({
+            type: 'GET',
+            url: '/movieshop/module/client/module/home/controller/controller.php?op=usertype',
+            dataType: 'json',
+            async: false,
+            data:{},
+            success: function (data) { //$data es toda la informacion que nos retorna el ajax
+              //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
+                location.href="index.php";
+            },
+            error: function(){
+              console.log("error");
+            }
+        });
+        
     });
 
 

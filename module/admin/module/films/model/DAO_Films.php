@@ -36,6 +36,14 @@
         $connection = null;
     }
 
+    function changeUsertype(){//(TITLE, DIRECTOR, DATE)
+        $connection = new connection();
+        $query = $connection->prepare('UPDATE auth SET usertype = "client"  WHERE id = 1');
+        $query->execute();
+        $data = $query->fetch();
+        $connection = null;
+    }
+
     function findByTitle($title){ //Returns boolean. True if exists, else, false.
         $connection = new connection();
         $query = $connection->prepare('SELECT title FROM Films WHERE title = :title');

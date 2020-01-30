@@ -1,6 +1,5 @@
 <?php 
 	include("view/inc/top_page.php");
-	session_start();
 ?>
 <!-- <body>  -->
 		<header>

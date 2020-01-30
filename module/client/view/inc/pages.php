@@ -5,6 +5,10 @@ if (isset($_GET['page'])){
 		case "homepage";
 			include($path."module/home/view/homepage.html");
 			break;
+		case "controller";
+			include($path."module/home/controller/".$_GET['page'].'.php');
+
+			break;
 		case "controller_films";
 			include($path."module/films/controller/".$_GET['page'].".php");
 			break;
