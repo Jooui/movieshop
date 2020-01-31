@@ -6,16 +6,19 @@
 
     function save($data){
             $connection = new connection();
-            $query = $connection->prepare('INSERT INTO ' . 'Films' . ' (title, director, release_date, genres) VALUES (:title, :director, :release_date, :genres)');
+            $query = $connection->prepare('INSERT INTO ' . 'Films' . ' (title, director, release_date, genres, score, coverimg) VALUES (:title, :director, :release_date, :genres, :score, :coverimg)');
             $query->bindParam(':title', $data['datos']['title']);
             $query->bindParam(':director', $data['datos']['director']);
             $query->bindParam(':release_date', $data['datos']['release_date']);
             $query->bindParam(':genres', $data['datos']['genres']);
+            $query->bindParam(':score', $data['datos']['score']);
+            $query->bindParam(':coverimg', $data['datos']['coverimg']);
     
             $query->execute();
             $connection = null;
 		
     }
+
 
     function deleteAll(){
         $connection = new connection();

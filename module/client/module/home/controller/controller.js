@@ -13,11 +13,21 @@ $(document).ready(function(){
           //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
             console.log(data);
             for(i = 0; i < 10; i++){
-
+                $urlCoverImage = data[i].coverimg;
                 $("#top-rated-movies").append(
                     '<div class="item movie-carousel">'+
-                    '<h4>'+(i+1)+'</h4>'+
-                    '<br> <span>'+data[i].title+'</span>'+
+                        //'<img src="'+$urlCoverImage+'" style="width=170px; height: 230px;">'+
+                        '<img src="'+$urlCoverImage+'">'+
+                        '<div class="canvas-score">'+
+                            '<span class="score-movie-carousel"> <i class="fas fa-star score-star"></i> '+data[i].score+'</span>'+
+                        '</div>'+
+                        '<div class="canvas-num-top">'+
+                            '<span class="num-movie-carousel">'+(i+1)+'</span>'+
+                        '</div>'+
+                        '<div class="footer-item">'+
+                            '<span class="movie-title-footer">'+data[i].title+'</span>'+
+                        '</div>'+
+                        '<br> <span>'+data[i].title+'</span>'+
                     '</div>'
                 );
     

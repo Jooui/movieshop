@@ -9,15 +9,29 @@ function randomName(){
  return $name;
 }
 
+function random_pic($dir = 'module/admin/view/img/cover-film'){
+    $files = glob($dir . '/*.*');
+    $file = array_rand($files);
+    return $files[$file];
+}
+
+function randomScore($min, $max, $decimals = 0) {
+  $scale = pow(10, $decimals);
+  return mt_rand($min * $scale, $max * $scale) / $scale;
+}
+
 function randomDate(){
-  $dates = array("5/23/2002","11/21/2002","3/27/2004","2/17/2005","6/16/2005","12/20/2005","5/31/2006",
-  "4/28/2007","3/27/2008","5/4/2008","6/1/2008","7/28/2008","12/7/2008","12/28/2008","10/8/2009","2/14/2011",
-  "2/23/2011","9/27/2012","10/9/2012","3/12/2014","7/31/2014","4/19/2016","10/5/2017","12/22/2018","5/12/2019");
+  $dates = array("2001-05-06","2003-08-14","2005-04-27","2006-12-12","2007-09-25","2009-05-28","2009-06-05","2010-10-03",
+  "2012-01-22","2012-07-12","2013-04-13","2013-06-16","2015-05-16","2015-06-26","2016-07-11","2016-12-27","2017-02-23",
+  "2017-07-24","2018-02-13","2018-09-23","2018-11-02","2019-02-13","2019-04-17","2019-09-15","2020-03-18","2006-10-21",
+  "2006-11-17","2006-12-22","2007-05-11","2008-11-16","2008-12-29","2009-09-15","2010-11-12","2012-03-13","2013-09-23",
+  "2017-01-23","2019-02-18","2007-07-18","2008-03-11","2008-12-26","2009-04-29","2010-01-01","2010-02-15","2011-07-10",
+  "2011-10-08","2012-04-26","2013-01-31","2014-10-05","2015-07-16","2015-12-24","2017-06-17","2017-09-28","2018-07-16");
 
    $date = $dates[array_rand($dates)];
    return $date;
  }
- 
+
  function randomTitle(){
   $titles1 = array("Lost", "Only", "Last", "First", "Third", "Sacred", "Bold", "Lovely", "Final", "Missing",
    "Shadowy", "Seventh", "Dwindling", "Missing", "Absent", "Vacant", "Cold", "Hot", "Burning", "Forgotten",
@@ -77,12 +91,14 @@ function generateDummies(){
             "title" => randomTitle(),
             "director" => randomName(),
             "release_date" => randomDate(),
-            "genres" => randomGenre()
+            "genres" => randomGenre(),
+            "score" => randomScore(0, 10, 2),
+            "coverimg" => random_pic()
         ];
         $return=array('datos'=>$data);
         if (findByTitle($data['title']) == false){
+          
           save($return);
-
           //$x = save($return);
           /*if ($x == null){
             $callback="index.php?page=503";

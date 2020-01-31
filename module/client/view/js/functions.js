@@ -8,7 +8,7 @@ $(document).ready(function(){
             "background-color": function(){
                 var elementHeight = 390;
                 var value = 1 - (elementHeight - scrollTop) / elementHeight;
-                return "rgba(50, 50, 50," + value + " )";
+                return "rgba(20, 20, 20," + value + " )";
             }        
         });
     }); 
@@ -59,7 +59,7 @@ $(document).ready(function(){
 
 
     $('.owl-carousel').owlCarousel({
-        stagePadding: 50,
+        
         loop:true,
         margin:10,
         nav:true,
@@ -67,19 +67,20 @@ $(document).ready(function(){
             400:{
                 items:1
             },
-            500:{
+            630:{
                 items:2
             },
-            700:{
+            910:{
                 items:3
             },
-            900:{
+            1230:{
                 items:4
             },
-            1200:{
+            1525:{
                 items:5
             }
         }
     });
-
+    $( ".owl-prev").html('<i class="fa fa-chevron-left prev-slide arrows-carousel"></i>');
+    $( ".owl-next").html('<i class="fa fa-chevron-right next-slide arrows-carousel"></i>');
 });
