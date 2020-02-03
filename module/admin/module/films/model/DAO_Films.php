@@ -19,6 +19,19 @@
 		
     }
 
+    function saveGenresFilm($genres){
+
+    }
+
+    function getAllGenres(){
+        $connection = new connection();
+        $query = $connection->prepare('SELECT * FROM genres');
+        $query->execute();
+        $connection = null;
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
+
 
     function deleteAll(){
         $connection = new connection();

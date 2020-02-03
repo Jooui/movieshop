@@ -13,8 +13,8 @@
 		
 		if(isset($_POST["genres"])){ 
 			$str1  = "";
-			foreach ($_POST['genres'] as $subject)  
-				$str1 = $str1 . $subject . ":";
+			foreach ($_POST['genres'] as $gen)  
+				$str1 = $str1 . $gen . ":";
 
 			//remove last character ":"
 			$str = substr($str1, 0, -1);
@@ -27,13 +27,11 @@
 
 			'release_date' => $_POST['release_date'],
 
-			'genres' => $str
+			'genres' => $str,
+
+			'score' => 0,
+
+			'coverimg' => "module/admin/view/img/delfault-img-film.png"
 		);
 		return $return=array('resultado'=>true,'error'=>$error,'datos'=>$resultado);
     }
-    
-    /*function debug($array){
-		echo "<pre>";
-		print_r($array);
-		echo "</pre><br>";
-	}*/

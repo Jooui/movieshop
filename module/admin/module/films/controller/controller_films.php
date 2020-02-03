@@ -1,9 +1,12 @@
 <?php
 
     $path = $_SERVER['DOCUMENT_ROOT'].'/movieshop/module/admin/';
-    include ($path."module/films/model/DAO_Films.php");
-    include ("module/admin/module/films/model/functions.inc.php");
-    include ("module/admin/module/films/model/dummiesFilms.php");
+    $dummiesPath = $path."module/films/model/dummiesFilms.php";
+    $functionsIncPath = $path."module/films/model/functions.inc.php";
+
+    include_once ($path."module/films/model/DAO_Films.php");
+    include_once ($dummiesPath);
+    include_once ($functionsIncPath);
     
     switch($_GET['op']){
 
@@ -13,6 +16,15 @@
             Browser::redirect($callback);
             die;
 
+
+        break;
+
+        case 'getGenres';
+        
+        $genres = getAllGenres();
+        
+        echo json_encode($genres);
+        exit;
 
         break;
 

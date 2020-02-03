@@ -48,23 +48,42 @@ function deleteAll(){
   }
 }
 
-
+/* <option value="1">January</option> */
 
 $( document ).ready(function() {
 
-  //JQWidget for upload img
-    //$('#jqxFileUpload').jqxFileUpload();
+  $.ajax({
+    type: 'GET',
+    url: '/movieshop/module/admin/module/films/controller/controller_films.php?op=getGenres',
+    dataType: 'json',
+    async: false,
+    data:{},
+    success: function (data) { //$data es toda la informacion que nos retorna el ajax
+        console.log(data);
+        for(i = 0; i < data.length; i++){
+            $("#genres").append(
+                '<option value="'+data[i].id+'">'+data[i].genre+'</option>'
+            );
+        }
+    },
+    error: function(data){
+      console.log("error: "+data);
+    }
+  });
+
+$('#genres').multipleSelect({
+  minimumCountSelected: 8,
+  selectAll: false
+});
 
 
   $('.viewFilm').on('click', function() {
-
     event.preventDefault();
     this.blur();
-
       var id = $(this).attr('id');
       $.ajax({
         type: 'GET',
-        url: '/VideoShop/module/films/controller/controller_films.php?op=view',
+        url: '/module/admin/module/films/controller/controller_films.php?op=view',
         dataType: 'json',
         data:{"idfilm":id}, //idfilm es el nombre de la variable: $_GET['idfilm'] i id es la variable anteriormente declarada
         success: function (data) { //$data es toda la informacion que nos retorna el ajax

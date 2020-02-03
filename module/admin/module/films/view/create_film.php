@@ -24,14 +24,8 @@
 		</div>
 
 		<label for="genres">Genres: </label>
-		<select id="genres" name = 'genres[]' multiple size = 6 class="form-control">   
-			<option value = 'english'>ENGLISH</option> 
-			<option value = 'maths'>MATHS</option> 
-			<option value = 'computer'>COMPUTER</option> 
-			<option value = 'physics'>PHYSICS</option> 
-			<option value = 'chemistry'>CHEMISTRY</option> 
-			<option value = 'hindi'>HINDI</option> 
-		</select> 
+		<select id="genres" name = 'genres[]' multiple="multiple"></select>
+
 		<span id="e_genres" class="styerror"></span>
 		<br>
 		<label for="genres">Image: </label>

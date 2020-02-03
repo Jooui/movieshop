@@ -109,3 +109,12 @@ body{
 	margin-left: 25%;
 	margin-right: 25%;
 }*/
+
+.ms-parent{
+	width: 100%;
+}
+
+.ms-choice{
+	height: 40px;
+	font-size: 17px;
+}
