@@ -4,23 +4,31 @@
     include_once($path."model/Browser.class.php");
 
 
-    function save($data){
+    function save($data){ //returns the last object created
             $connection = new connection();
-            $query = $connection->prepare('INSERT INTO ' . 'Films' . ' (title, director, release_date, genres, score, coverimg) VALUES (:title, :director, :release_date, :genres, :score, :coverimg)');
+            $query = $connection->prepare('INSERT INTO ' . 'Films' . ' (title, director, release_date, score, coverimg) VALUES (:title, :director, :release_date, :score, :coverimg)');
             $query->bindParam(':title', $data['datos']['title']);
             $query->bindParam(':director', $data['datos']['director']);
             $query->bindParam(':release_date', $data['datos']['release_date']);
-            $query->bindParam(':genres', $data['datos']['genres']);
+           // $query->bindParam(':genres', $data['datos']['genres']);
             $query->bindParam(':score', $data['datos']['score']);
             $query->bindParam(':coverimg', $data['datos']['coverimg']);
-    
+            $query->execute();
+
+            $query = $connection->prepare('SELECT * FROM `films` ORDER BY id DESC LIMIT 1');
             $query->execute();
             $connection = null;
+            return $query->fetchAll(PDO::FETCH_OBJ);
 		
     }
 
-    function saveGenresFilm($genres){
-
+    function saveGenresFilm($idFilm, $idGenre){
+            $connection = new connection();
+            $query = $connection->prepare('INSERT INTO ' . 'films_genres' . ' (id_film, id_genre) VALUES (:id_film, :id_genre)');
+            $query->bindParam(':id_film', $idFilm);
+            $query->bindParam(':id_genre', $idGenre);
+            $query->execute();
+            $connection = null;
     }
 
     function getAllGenres(){

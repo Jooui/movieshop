@@ -15,8 +15,7 @@
             $callback="index.php?page=controller_films&op=list";
             Browser::redirect($callback);
             die;
-
-
+            
         break;
 
         case 'getGenres';
@@ -70,8 +69,14 @@
                 if ($result['resultado']) {
                     //Insert data on table
 
-                    save($result);
-   
+                    $saveData = save($result);
+         
+                    foreach ($result['datos']['genres'] as $gen){
+                        saveGenresFilm($saveData[0]->id,$gen);
+                    }
+        
+                    
+                    
                                
                     //redirect
                     $callback="index.php?page=controller_films&op=list";

@@ -69,8 +69,8 @@ function randomDate(){
  }
   
 function randomGenre(){
-  $genres = array("Drama", "Comedy", "Thriller", "Action", "Horror", "Crime", "Adventure", "Mistery", "Family", "Fantasy",
-  "Sci-Fi", "Animation", "Biography", "History", "Musical", "War", "Sport", "Western");
+  $genres = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+  "11", "12", "13", "14", "15", "16", "17", "18");
 
   $randomNums = randomGen(0,17,3);
   
@@ -80,7 +80,14 @@ function randomGenre(){
 
   //remove last character ":"
   $str = substr($str1, 0, -1);
-  return $str;
+
+  $arrayGenres = explode(':', $str);
+  
+
+
+
+
+  return $arrayGenres;
 }
 
 function generateDummies(){
@@ -91,14 +98,17 @@ function generateDummies(){
             "title" => randomTitle(),
             "director" => randomName(),
             "release_date" => randomDate(),
-            "genres" => randomGenre(),
             "score" => randomScore(0, 10, 2),
             "coverimg" => random_pic()
         ];
         $return=array('datos'=>$data);
         if (findByTitle($data['title']) == false){
           
-          save($return);
+          $saveData = save($return);
+          $rGenres = randomGenre();
+          foreach ($rGenres as $gen){
+            saveGenresFilm($saveData[0]->id,$gen);
+          }
           //$x = save($return);
           /*if ($x == null){
             $callback="index.php?page=503";

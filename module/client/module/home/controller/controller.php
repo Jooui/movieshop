@@ -15,6 +15,15 @@ switch($_GET['op']){
 
     break;
 
+    case 'get_genres_movies';
+
+        $movies = getTop10Films();
+
+        echo json_encode($movies);
+        exit;
+
+    break;
+
     case 'usertype';
 
         changeUsertype();

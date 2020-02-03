@@ -27,7 +27,7 @@
 
 			'release_date' => $_POST['release_date'],
 
-			'genres' => $str,
+			'genres' => $_POST['genres'],
 
 			'score' => 0,
 
