@@ -51,6 +51,25 @@ function deleteAll(){
 /* <option value="1">January</option> */
 
 $( document ).ready(function() {
+  $('#button_new_genre').on('click', function() {
+    var genre = $('#new_genre').val();
+    
+    $.ajax({
+      type: 'POST',
+      url: '/movieshop/module/admin/module/films/controller/controller_films.php?op=addGenres',
+      data: {genre: genre},
+      success: function(data) {
+        console.log("Se ha añadido. Data: "+data);
+        $('#notif_new_genre').html("Se ha añadido: "+data);
+        $('#new_genre').val("");
+      },
+      error: function(data){
+        console.log(error);
+      }
+    });
+
+  });
+    
 
   $.ajax({
     type: 'GET',

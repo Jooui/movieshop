@@ -18,6 +18,14 @@
             
         break;
 
+        case 'addGenres';
+
+            saveGenre($_POST['genre']);
+            echo json_encode($_POST['genre']);
+            exit;
+
+        break;
+
         case 'getGenres';
         
         $genres = getAllGenres();

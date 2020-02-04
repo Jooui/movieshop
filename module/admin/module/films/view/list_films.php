@@ -8,6 +8,9 @@
                     <input name="Create" Value="Create" type="button" class="btn btn-primary"onclick='location.href="index.php?page=controller_films&op=create"'>
                     <input name="Dummies" Value="Dummies" type="button" class="btn btn-danger"onclick='location.href="index.php?page=controller_films&op=dummies"'>
                     <input name="Delete _all" Value="Delete All" type="button" class="btn btn-danger"onclick='location.href="index.php?page=controller_films&op=deleteAll"'>  
+                    <input name="new_genre" id="new_genre" type="text" placeholder="New genre"/>
+                    <button type="button" id="button_new_genre">ADD</button>
+                    <span id="notif_new_genre"></span>
                 </div>
                 <table class='table table-bordered table-striped table-sm' id='table_list_films' width=100%>
                     <thead>

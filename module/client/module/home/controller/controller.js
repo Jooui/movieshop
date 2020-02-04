@@ -2,6 +2,11 @@ var path = "/movieshop/module/client/module/home/controller/controller.php";
 
 $(document).ready(function(){
 
+    $(".option").click(function(){
+        $(".option").removeClass("active");
+        $(this).addClass("active");
+        
+     });     
 
     $.ajax({
         type: 'GET',
@@ -48,7 +53,7 @@ $(document).ready(function(){
         data:{},
         success: function (data) { //$data es toda la informacion que nos retorna el ajax
           //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
-            console.log(data);
+            
             for(i = 0; i < 10; i++){
                 $urlCoverImage = data[i].coverimg;
                 $("#top-rated-movies").append(
