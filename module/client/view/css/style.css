@@ -199,3 +199,16 @@ header{
   .arrows-carousel:hover{
     transform: scale(1.2);
   }
+
+  #canvas-card-genres{
+      display: flex;
+      flex-wrap: wrap;
+  }
+
+  .card-genre{
+      margin: auto;
+      margin-bottom: 50px;
+      width: 325px;
+      height: 125px;
+      border: 1px solid black;
+  }
