@@ -94,8 +94,8 @@ header{
 
 .container-wrapper{
     padding-top: 50px;
-    padding-right: 20%;
-    padding-left: 20%;
+    padding-right: 12%;
+    padding-left: 12%;
 }
 
 .movie-carousel{
@@ -190,25 +190,35 @@ header{
   
 
   
-  .owl-carousel .prev-slide{
+.owl-carousel .prev-slide{
     left: -50px;
-  }
-  .owl-carousel .next-slide{
+}
+.owl-carousel .next-slide{
     right: -25px;
-  }
-  .arrows-carousel:hover{
+}
+.arrows-carousel:hover{
     transform: scale(1.2);
-  }
+}
 
-  #canvas-card-genres{
-      display: flex;
-      flex-wrap: wrap;
-  }
+#canvas-card-genres{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: -50px;
+}
 
-  .card-genre{
-      margin: auto;
-      margin-bottom: 50px;
-      width: 325px;
-      height: 125px;
-      border: 1px solid black;
-  }
+.card-genre{
+    margin-right: 30px;
+    margin-bottom: 50px;
+    width: 300px;
+    height: 125px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-genre-title{
+    font-size: 20px;
+    font-weight: 700;
+}

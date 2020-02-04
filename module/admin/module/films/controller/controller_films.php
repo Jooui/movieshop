@@ -5,8 +5,8 @@
     $functionsIncPath = $path."module/films/model/functions.inc.php";
 
     include_once ($path."module/films/model/DAO_Films.php");
-    /*include_once ($dummiesPath);
-    include_once ($functionsIncPath);*/
+    include_once ($dummiesPath);
+    include_once ($functionsIncPath);
     
     switch($_GET['op']){
 
