@@ -5,30 +5,52 @@
 
 
     function save($data){ //returns the last object created
-            $connection = new connection();
-            $query = $connection->prepare('INSERT INTO ' . 'Films' . ' (title, director, release_date, score, coverimg) VALUES (:title, :director, :release_date, :score, :coverimg)');
-            $query->bindParam(':title', $data['datos']['title']);
-            $query->bindParam(':director', $data['datos']['director']);
-            $query->bindParam(':release_date', $data['datos']['release_date']);
-           // $query->bindParam(':genres', $data['datos']['genres']);
-            $query->bindParam(':score', $data['datos']['score']);
-            $query->bindParam(':coverimg', $data['datos']['coverimg']);
-            $query->execute();
+        $connection = new connection();
+        $query = $connection->prepare('INSERT INTO ' . 'Films' . ' (title, director, release_date, score, coverimg) VALUES (:title, :director, :release_date, :score, :coverimg)');
+        $query->bindParam(':title', $data['datos']['title']);
+        $query->bindParam(':director', $data['datos']['director']);
+        $query->bindParam(':release_date', $data['datos']['release_date']);
+        // $query->bindParam(':genres', $data['datos']['genres']);
+        $query->bindParam(':score', $data['datos']['score']);
+        $query->bindParam(':coverimg', $data['datos']['coverimg']);
+        $query->execute();
 
-            $query = $connection->prepare('SELECT * FROM `films` ORDER BY id DESC LIMIT 1');
-            $query->execute();
-            $connection = null;
-            return $query->fetchAll(PDO::FETCH_OBJ);
-		
+        $query = $connection->prepare('SELECT * FROM `films` ORDER BY id DESC LIMIT 1');
+        $query->execute();
+        $connection = null;
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    function getGenresOfFilm($id){
+        
+        $connection = new connection();
+        $query = $connection->prepare('SELECT genre FROM `genres` WHERE id IN (SELECT id_genre FROM `films_genres` where id_film = '.$id.')');
+        $query->execute();             
+        $connection = null;
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    function getGenresToString($id){
+        
+        $genres = getGenresOfFilm($id);
+        
+        $str1  = "";
+        for ($i = 0; $i < sizeof($genres); $i++ ){
+            $str1 = $str1 . $genres[$i]->genre . ",";
+        }
+
+        //remove last character ":"
+        $str = substr($str1, 0, -1);
+        return $str;
     }
 
     function saveGenresFilm($idFilm, $idGenre){
-            $connection = new connection();
-            $query = $connection->prepare('INSERT INTO ' . 'films_genres' . ' (id_film, id_genre) VALUES (:id_film, :id_genre)');
-            $query->bindParam(':id_film', $idFilm);
-            $query->bindParam(':id_genre', $idGenre);
-            $query->execute();
-            $connection = null;
+        $connection = new connection();
+        $query = $connection->prepare('INSERT INTO ' . 'films_genres' . ' (id_film, id_genre) VALUES (:id_film, :id_genre)');
+        $query->bindParam(':id_film', $idFilm);
+        $query->bindParam(':id_genre', $idGenre);
+        $query->execute();
+        $connection = null;
     }
 
     function getAllGenres(){

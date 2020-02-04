@@ -59,7 +59,6 @@ $( document ).ready(function() {
     async: false,
     data:{},
     success: function (data) { //$data es toda la informacion que nos retorna el ajax
-        console.log(data);
         for(i = 0; i < data.length; i++){
             $("#genres").append(
                 '<option value="'+data[i].id+'">'+data[i].genre+'</option>'

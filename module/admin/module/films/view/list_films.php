@@ -26,7 +26,7 @@
                             <td> <?php echo $r->id;?> </td>
                             <td> <?php echo $r->title;?> </td>
                             <td> <?php echo $r->director;?> </td>
-                            <td> <?php echo str_replace(":", ", ", $r->genres);?> </td>
+                            <td> <?php echo getGenresToString($r->id);?> </td>
                             <td> <?php echo $r->release_date;?> </td>
                             <td id="tdButtons">
                               <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="<?php //$idmod=$r->id;$_SESSION['id_modal']=$idmod;?>">View</button>-->

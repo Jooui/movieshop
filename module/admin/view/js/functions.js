@@ -1,6 +1,6 @@
 
 $( document ).ready(function() {
-    var dropdown = document.getElementsByClassName("dropdown_button");
+    
 
     $( '#menu-login' ).on( "click", function() {
         $.ajax({
@@ -11,14 +11,17 @@ $( document ).ready(function() {
             
             done: function (data) { //$data es toda la informacion que nos retorna el ajax
               //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
+              console.log("hola");
                 location.href="index.php";
             },
             error: function(){
+                console.log("hola_error");
+
                 location.href="index.php";
             }
         });
     });
-
+    var dropdown = document.getElementsByClassName("dropdown_button");
 
     for (i = 0; i < dropdown.length; i++) {
 
