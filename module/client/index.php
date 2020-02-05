@@ -1,5 +1,14 @@
 <?php 
+if (isset($_GET['page'])){
+	switch($_GET['page']){
+		case "shop":
+			include("view/inc/top_page_shop.php");
+		break;
+	}
+}else{
 	include("view/inc/top_page.php");
+}
+
 ?>
 <!-- <body>  -->
 		<header>

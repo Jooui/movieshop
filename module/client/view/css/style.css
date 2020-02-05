@@ -67,7 +67,7 @@ header{
     background-repeat: no-repeat;*/
     display: flex;
     justify-content: center;
-    padding-top: 180px;
+    align-items: center;
 }
 .sub-header .search-bar-canvas{
     background-color: rgb(255, 255, 255);

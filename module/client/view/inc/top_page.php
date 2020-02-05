@@ -54,6 +54,8 @@
 
 	<!-- Local imports -->
 	<link href="module/client/view/css/style.css" rel="stylesheet" type="text/css" />
+	<!-- <link href="module/client/view/css/flex-cards.css" rel="stylesheet" type="text/css" />
+	<link href="module/client/view/css/material-cards.css" rel="stylesheet" type="text/css" /> -->
 
 	<script src="module/client/module/home/controller/controller.js"></script>
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>

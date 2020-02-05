@@ -669,7 +669,7 @@
     });
     describe("init()", function() {
       describe("clickable", function() {
-        var dropzone, dropzones, name, _results;
+        var dropzone, dropzones, name, results;
         dropzones = {
           "using acceptedFiles": new Dropzone(Dropzone.createElement("<form action=\"/\"></form>"), {
             clickable: true,
@@ -689,10 +689,10 @@
           });
           return dropzone.hiddenFileInput.hasAttribute("accept").should.be["false"];
         });
-        _results = [];
+        results = [];
         for (name in dropzones) {
           dropzone = dropzones[name];
-          _results.push(describe(name, function() {
+          results.push(describe(name, function() {
             return (function(dropzone) {
               it("should create a hidden file input if clickable", function() {
                 dropzone.hiddenFileInput.should.be.ok;
@@ -702,22 +702,22 @@
                 return dropzone.hiddenFileInput.getAttribute("accept").should.equal("audio/*,video/*");
               });
               return it("should create a new input element when something is selected to reset the input field", function() {
-                var event, hiddenFileInput, i, _i, _results1;
-                _results1 = [];
-                for (i = _i = 0; _i <= 3; i = ++_i) {
+                var event, hiddenFileInput, i, j, results1;
+                results1 = [];
+                for (i = j = 0; j <= 3; i = ++j) {
                   hiddenFileInput = dropzone.hiddenFileInput;
                   event = document.createEvent("HTMLEvents");
                   event.initEvent("change", true, true);
                   hiddenFileInput.dispatchEvent(event);
                   dropzone.hiddenFileInput.should.not.equal(hiddenFileInput);
-                  _results1.push(Dropzone.elementInside(hiddenFileInput, document).should.not.be.ok);
+                  results1.push(Dropzone.elementInside(hiddenFileInput, document).should.not.be.ok);
                 }
-                return _results1;
+                return results1;
               });
             })(dropzone);
           }));
         }
-        return _results;
+        return results;
       });
       it("should create a .dz-message element", function() {
         var dropzone, element;
@@ -820,10 +820,10 @@
           });
           return describe("with null thumbnail settings", function() {
             return it("should properly return target dimensions", function() {
-              var i, info, setting, testSettings, _i, _len, _results;
+              var i, info, j, len, results, setting, testSettings;
               testSettings = [[null, null], [null, 150], [150, null]];
-              _results = [];
-              for (i = _i = 0, _len = testSettings.length; _i < _len; i = ++_i) {
+              results = [];
+              for (i = j = 0, len = testSettings.length; j < len; i = ++j) {
                 setting = testSettings[i];
                 dropzone.options.thumbnailWidth = setting[0];
                 dropzone.options.thumbnailHeight = setting[1];
@@ -838,12 +838,12 @@
                 }
                 if (i === 2) {
                   info.optWidth.should.eql(150);
-                  _results.push(info.optHeight.should.eql(75));
+                  results.push(info.optHeight.should.eql(75));
                 } else {
-                  _results.push(void 0);
+                  results.push(void 0);
                 }
               }
-              return _results;
+              return results;
             });
           });
         });
@@ -1044,11 +1044,11 @@
           dropzone.addFile(mock2);
           dropzone.addFile(mock3);
           return setTimeout(function() {
-            var _ref;
+            var ref;
             dropzone.processFiles.callCount.should.equal(1);
             sinon.spy(mock1.xhr, "abort");
             dropzone.cancelUpload(mock1);
-            expect((mock1.xhr === (_ref = mock2.xhr) && _ref === mock3.xhr)).to.be.ok;
+            expect((mock1.xhr === (ref = mock2.xhr) && ref === mock3.xhr)).to.be.ok;
             mock1.status.should.equal(Dropzone.CANCELED);
             mock2.status.should.equal(Dropzone.CANCELED);
             mock3.status.should.equal(Dropzone.CANCELED);
@@ -1201,7 +1201,7 @@
       return describe("events", function() {
         return describe("progress updates", function() {
           return it("should properly emit a totaluploadprogress event", function(done) {
-            var totalProgressExpectation, _called;
+            var _called, totalProgressExpectation;
             dropzone.files = [
               {
                 size: 1990,
@@ -1573,8 +1573,8 @@
                   return new Blob([data], {
                     type: type
                   });
-                } catch (_error) {
-                  e = _error;
+                } catch (error1) {
+                  e = error1;
                   BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder;
                   builder = new BlobBuilder();
                   builder.append(data.buffer || data);

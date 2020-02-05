@@ -27,6 +27,9 @@ if (isset($_GET['page'])){
 		case "503";
 			include($path."view/inc/error".$_GET['page'].".php");
 			break;
+		case "shop";
+			include($path."module/shop/view/listFilms.html");
+			break;
 		default;
 			include($path."module/home/view/homepage.html");
 			break;
