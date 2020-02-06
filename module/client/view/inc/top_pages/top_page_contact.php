@@ -22,16 +22,15 @@
     <script type="text/javascript" src="module/client/view/libraries/jquery/jquery-ui.js"></script>
 	<link rel="stylesheet" href="module/client/view/libraries/jquery/jquery-ui-smoothness.css" type="text/css">
 
-	<!-- Local imports -->
-    <link href="module/client/view/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="module/client/module/shop/view/css/cards.css" rel="stylesheet" type="text/css" />
+	<!-- API Keys -->
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFH2cZ9auX0pFzikPfaJgkJuQFS5EsDUM&callback=initMap"type="text/javascript"></script>
 
-	<!-- <link href="module/client/view/css/flex-cards.css" rel="stylesheet" type="text/css" />
-	<link href="module/client/view/css/material-cards.css" rel="stylesheet" type="text/css" /> -->
-	<script src="module/client/module/shop/view/js/shop-cards.js"></script>
-	<script src="module/client/module/home/controller/controller.js"></script>
+	<!-- Local imports -->
+    <link href="module/client/view/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="module/client/module/contact/view/css/style_contact.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="module/client/module/contact/view/js/maps.js"></script>
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>
-	<script type="text/javascript" src="module/client/view/js/functions.js"></script>
+	<!-- <script type="text/javascript" src="module/client/view/js/functions.js"></script> -->
 
 
 </head>

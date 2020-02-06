@@ -3,12 +3,15 @@
     <div class="header-main">
         
         <div class="header-logo">
-            <span>VideoShop</span>
+            
+            <span><a href="index.php">VideoShop</a></span>
         </div>
 
         <div class="header-pull-right">
 
-            <a id="header-login" href=# data-tr="Login">Iniciar Sesion</a>
+            <a id="contact-us" class="header-button" href="#" data-tr="Contact Us"></a>
+
+            <a id="header-login" class="header-button" href=# data-tr="Login">Iniciar Sesion</a>
             
             <div class="lang-div">
                     <select name="Language" id="lang" class="form-control form-control-sm">

@@ -23,6 +23,11 @@ header{
     margin-top: 5px;
 }
 
+.header-logo span a{
+    text-decoration: none;
+    color: white;
+}
+
 .header-pull-right{
     float: right;
     height: 100%;
@@ -36,7 +41,7 @@ header{
     padding: 0 30px;
     height: 60px;
 }
-#header-login{
+.header-button{
     width: 135px;
     margin-top: 2px;
     margin-right: 20px;

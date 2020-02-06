@@ -36,6 +36,9 @@ $(document).ready(function(){
             $(this).css({"border-bottom": "1.3px solid transparent"})
         }
     );
+    $('#contact-us').on('click', function() {
+        location.href="index.php?page=contact";
+    });
 
     $('#header-login').on('click', function() {
 

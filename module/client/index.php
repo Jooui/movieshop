@@ -2,11 +2,14 @@
 if (isset($_GET['page'])){
 	switch($_GET['page']){
 		case "shop":
-			include("view/inc/top_page_shop.php");
+			include("view/inc/top_pages/top_page_shop.php");
+		break;
+		case "contact":
+			include("view/inc/top_pages/top_page_contact.php");
 		break;
 	}
 }else{
-	include("view/inc/top_page.php");
+	include("view/inc/top_pages/top_page.php");
 }
 
 ?>
