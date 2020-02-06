@@ -18,10 +18,11 @@
     height: 500px;
     border:1px solid #ced4da;
     position: absolute;
-    bottom: -250px;
+    transform: translateY(270px);;
     display: flex;
     border-radius: 1%;
     overflow: hidden;
+    margin-bottom: 300px;
 }
 
 .contact-inputs{
@@ -88,12 +89,28 @@
     font-size: 40px;
 }
 
+.top-canvas{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+.top-canvas button{
+    border: none;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 13%;
+    color: white;
+    background-color: rgb(24, 70, 138);
+    min-width: 100px;
+}
+
 .contact-info{
     width: 30%;
     height: 100%;
     /* border: 1px solid red; */
     border-left: 1px solid #bec0c2;
-    background-image: url('https://digitalsynopsis.com/wp-content/uploads/2017/02/beautiful-color-gradients-backgrounds-030-happy-fisher.png');
+    background-image: url('/movieshop/module/client/view/img/background-contact-info.png');
     background-repeat: no-repeat;
     background-size: cover;
     color: #495057;

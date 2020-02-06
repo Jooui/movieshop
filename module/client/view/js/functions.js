@@ -40,6 +40,10 @@ $(document).ready(function(){
         location.href="index.php?page=contact";
     });
 
+    $('#shop').on('click', function() {
+        location.href="index.php?page=shop";
+    });
+
     $('#header-login').on('click', function() {
 
         $.ajax({
@@ -59,31 +63,4 @@ $(document).ready(function(){
         
     });
 
-
-
-    $('.owl-carousel').owlCarousel({
-        
-        loop:true,
-        margin:10,
-        nav:true,
-        responsive:{
-            400:{
-                items:1
-            },
-            630:{
-                items:2
-            },
-            910:{
-                items:3
-            },
-            1230:{
-                items:4
-            },
-            1525:{
-                items:5
-            }
-        }
-    });
-    $( ".owl-prev").html('<i class="fa fa-chevron-left prev-slide arrows-carousel"></i>');
-    $( ".owl-next").html('<i class="fa fa-chevron-right next-slide arrows-carousel"></i>');
 });

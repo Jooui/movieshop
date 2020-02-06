@@ -25,14 +25,11 @@
 	<!-- Local imports -->
     <link href="module/client/view/css/style.css" rel="stylesheet" type="text/css" />
     <link href="module/client/module/shop/view/css/cards.css" rel="stylesheet" type="text/css" />
-
-	<!-- <link href="module/client/view/css/flex-cards.css" rel="stylesheet" type="text/css" />
-	<link href="module/client/view/css/material-cards.css" rel="stylesheet" type="text/css" /> -->
+	
 	<script src="module/client/module/shop/controller/controller_shop.js"></script>
 	<script src="module/client/module/shop/view/js/shop-cards.js"></script>
-	
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>
-	<!-- <script type="text/javascript" src="module/client/view/js/functions.js"></script> -->
+	<script type="text/javascript" src="module/client/view/js/functions.js"></script>
 
 
 </head>

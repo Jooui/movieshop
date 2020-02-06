@@ -8,6 +8,7 @@
         </div>
 
         <div class="header-pull-right">
+            <a id="shop" class="header-button" href="#" data-tr="Shop"></a>
 
             <a id="contact-us" class="header-button" href="#" data-tr="Contact Us"></a>
 

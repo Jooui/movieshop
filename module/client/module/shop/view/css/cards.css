@@ -24,11 +24,19 @@
 }
 
 .card-shop-data{
+    
     width: 100%;
     height: 0px;
     transition: 0.5s;
     overflow: hidden;
     background-color: #00675d;
+}
+
+
+
+.card-shop-data p{
+    padding: 15px 15px 15px 15px;
+    color: white;
 }
 
 .img-size{
