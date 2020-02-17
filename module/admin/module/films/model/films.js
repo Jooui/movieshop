@@ -101,7 +101,7 @@ $('#genres').multipleSelect({
       var id = $(this).attr('id');
       $.ajax({
         type: 'GET',
-        url: '/module/admin/module/films/controller/controller_films.php?op=view',
+        url: '/movieshop/module/admin/module/films/controller/controller_films.php?op=view',
         dataType: 'json',
         data:{"idfilm":id}, //idfilm es el nombre de la variable: $_GET['idfilm'] i id es la variable anteriormente declarada
         success: function (data) { //$data es toda la informacion que nos retorna el ajax

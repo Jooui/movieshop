@@ -35,8 +35,50 @@ $(document).ready(function(){
         $(".option").removeClass("active");
         $(this).addClass("active");
         
-     });     
+    });     
 
+
+    loadRatesMovies();
+    
+    getGenresMovies();
+    
+
+
+
+
+    
+    $('.owl-carousel').owlCarousel({
+        
+        loop:true,
+        margin:10,
+        nav:true,
+        responsive:{
+            400:{
+                items:1
+            },
+            630:{
+                items:2
+            },
+            910:{
+                items:3
+            },
+            1230:{
+                items:4
+            },
+            1525:{
+                items:5
+            }
+        }
+    });
+    $( ".owl-prev").html('<i class="fa fa-chevron-left prev-slide arrows-carousel"></i>');
+    $( ".owl-next").html('<i class="fa fa-chevron-right next-slide arrows-carousel"></i>');
+
+    
+
+
+});
+
+function loadRatesMovies(){
     $.ajax({
         type: 'GET',
         url: '/movieshop/module/client/module/home/controller/controller.php?op=rated-movies',
@@ -72,32 +114,9 @@ $(document).ready(function(){
           console.log("error");
         }
     });
-    $('.owl-carousel').owlCarousel({
-        
-        loop:true,
-        margin:10,
-        nav:true,
-        responsive:{
-            400:{
-                items:1
-            },
-            630:{
-                items:2
-            },
-            910:{
-                items:3
-            },
-            1230:{
-                items:4
-            },
-            1525:{
-                items:5
-            }
-        }
-    });
-    $( ".owl-prev").html('<i class="fa fa-chevron-left prev-slide arrows-carousel"></i>');
-    $( ".owl-next").html('<i class="fa fa-chevron-right next-slide arrows-carousel"></i>');
+}
 
+function getGenresMovies(){
     $.ajax({
         type: 'GET',
         url: '/movieshop/module/client/module/home/controller/controller.php?op=get_genres_movies',
@@ -105,13 +124,21 @@ $(document).ready(function(){
         async: false,
         data:{},
         success: function (data) { //$data es toda la informacion que nos retorna el ajax
-          //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0] 
+          //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
+            console.log(data);
+            for(i = 0; i < 10; i++){
+                //$urlCoverImage = data[i].coverimg;
+
+                $("#canvas-card-genres").append(
+                    '<div class="card-genre" id="'+data[i].id+'">'+
+                    '<span class="card-genre-title">'+data[i].genre+'</span>'+
+                    '</div>'
+                );    
+            }  
             
         },
         error: function(){
           console.log("error");
         }
     });
-
-
-});
+}

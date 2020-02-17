@@ -16,11 +16,13 @@ switch($_GET['op']){
     break;
 
     case 'get_genres_movies';
+    //echo json_encode($movies);
+    
+       $movies = getSixGenres();
+       echo json_encode($movies);
 
-        $movies = getTop10Films();
-
-        echo json_encode($movies);
-        exit;
+       exit;
+        
 
     break;
 

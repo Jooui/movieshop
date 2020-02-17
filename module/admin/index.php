@@ -5,7 +5,7 @@
 		include("view/inc/top_pages/top_page.php");
 	}*/
 	
-	include("view/inc/top_pages/top_page_films.php");
+	include("view/inc/top_page_films.php");
 ?>
 
 <div class="verticalMenu" id="menu">

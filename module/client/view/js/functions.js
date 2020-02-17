@@ -8,9 +8,12 @@ $(document).ready(function(){
             "background-color": function(){
                 var elementHeight = 390;
                 var value = 1 - (elementHeight - scrollTop) / elementHeight;
+                // console.log(value);
                 return "rgba(20, 20, 20," + value + " )";
             }        
         });
+        
+        // console.log(scrollTop);
     }); 
 
     //FUNCTION FOR CHANGE THE LENGTH OF BORDER-BOTTOM

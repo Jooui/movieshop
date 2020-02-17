@@ -13,6 +13,15 @@ function getTop10Films(){ //Get all data from Films
     
 }
 
+function getSixGenres(){ //Get all data from Films
+    $connection = new connection();
+    $query = $connection->prepare('SELECT * FROM genres LIMIT 6');
+    $query->execute();
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+    
+}
+
 function getUsertype(){ //Get actual user
     $connection = new connection();
     $query = $connection->prepare('SELECT usertype FROM auth where id=1');

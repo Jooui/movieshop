@@ -1,13 +1,35 @@
+var numItemsShop = 0;
 $(document).ready(function(){
+
+    loadItems();
+    loadItemsOnScroll();
+    
+});
+
+function loadItemsOnScroll(){
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            loadItems();
+        }
+    });
+}
+
+function loadItems(){
+    numItemsShop = $('.card-shop').length;
     $.ajax({
         type: 'GET',
         url: '/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies',
         dataType: 'json',
         async: false,
-        data:{},
+        data:{"limit":20,"offset":numItemsShop},
+        beforeSend: function() {
+
+        },
         success: function (data) { //$data es toda la informacion que nos retorna el ajax
           //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
-            for(i = 0; i < data.length; i++){
+            console.log(data);
+
+           for(i = 0; i < data.length; i++){
                 
                 $urlCoverImage = data[i].coverimg;
     
@@ -51,5 +73,6 @@ $(document).ready(function(){
           console.log("error");
         }
     });
-});
+    
+}
 

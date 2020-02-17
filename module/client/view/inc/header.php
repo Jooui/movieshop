@@ -25,7 +25,7 @@
         </div>
         
     </div>
-    
+    <div id="show-contact-modal" style="display: none"></div>
     
 
 </div>
