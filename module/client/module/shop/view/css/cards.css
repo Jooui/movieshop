@@ -1,7 +1,21 @@
 #shopContainer{
+    margin-bottom: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+#loadingGif{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-gif{
+    height: 100px;
+    width: 400px;
+    object-fit: cover;
 }
 
 .cards-container{

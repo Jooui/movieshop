@@ -1,83 +1,5 @@
 var path = "/movieshop/module/client/module/home/controller/controller.php";
 
-$(document).ready(function(){
-
-    $('.material-card > .mc-btn-action').click(function () {
-        var card = $(this).parent('.material-card');
-        var icon = $(this).children('i');
-        icon.addClass('fa-spin-fast');
-
-        if (card.hasClass('mc-active')) {
-            card.removeClass('mc-active');
-
-            window.setTimeout(function() {
-                icon
-                    .removeClass('fa-arrow-left')
-                    .removeClass('fa-spin-fast')
-                    .addClass('fa-bars');
-
-            }, 800);
-        } else {
-            card.addClass('mc-active');
-
-            window.setTimeout(function() {
-                icon
-                    .removeClass('fa-bars')
-                    .removeClass('fa-spin-fast')
-                    .addClass('fa-arrow-left');
-
-            }, 800);
-        }
-    });
-
-
-    $(".option").click(function(){
-        $(".option").removeClass("active");
-        $(this).addClass("active");
-        
-    });     
-
-
-    loadRatesMovies();
-    
-    getGenresMovies();
-    
-
-
-
-
-    
-    $('.owl-carousel').owlCarousel({
-        
-        loop:true,
-        margin:10,
-        nav:true,
-        responsive:{
-            400:{
-                items:1
-            },
-            630:{
-                items:2
-            },
-            910:{
-                items:3
-            },
-            1230:{
-                items:4
-            },
-            1525:{
-                items:5
-            }
-        }
-    });
-    $( ".owl-prev").html('<i class="fa fa-chevron-left prev-slide arrows-carousel"></i>');
-    $( ".owl-next").html('<i class="fa fa-chevron-right next-slide arrows-carousel"></i>');
-
-    
-
-
-});
-
 function loadRatesMovies(){
     $.ajax({
         type: 'GET',
@@ -126,7 +48,7 @@ function getGenresMovies(){
         success: function (data) { //$data es toda la informacion que nos retorna el ajax
           //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
             console.log(data);
-            for(i = 0; i < 10; i++){
+            for(i = 0; i < 6; i++){
                 //$urlCoverImage = data[i].coverimg;
 
                 $("#canvas-card-genres").append(
@@ -142,3 +64,86 @@ function getGenresMovies(){
         }
     });
 }
+
+function owlCarousel(){
+    $('.owl-carousel').owlCarousel({
+        
+        loop:true,
+        margin:10,
+        nav:true,
+        responsive:{
+            400:{
+                items:1
+            },
+            630:{
+                items:2
+            },
+            910:{
+                items:3
+            },
+            1230:{
+                items:4
+            },
+            1525:{
+                items:5
+            }
+        }
+    });
+    $( ".owl-prev").html('<i class="fa fa-chevron-left prev-slide arrows-carousel"></i>');
+    $( ".owl-next").html('<i class="fa fa-chevron-right next-slide arrows-carousel"></i>');
+}
+
+/*$('.material-card > .mc-btn-action').click(function () {
+        var card = $(this).parent('.material-card');
+        var icon = $(this).children('i');
+        icon.addClass('fa-spin-fast');
+
+        if (card.hasClass('mc-active')) {
+            card.removeClass('mc-active');
+
+            window.setTimeout(function() {
+                icon
+                    .removeClass('fa-arrow-left')
+                    .removeClass('fa-spin-fast')
+                    .addClass('fa-bars');
+
+            }, 800);
+        } else {
+            card.addClass('mc-active');
+
+            window.setTimeout(function() {
+                icon
+                    .removeClass('fa-bars')
+                    .removeClass('fa-spin-fast')
+                    .addClass('fa-arrow-left');
+
+            }, 800);
+        }
+    });*/
+
+    $(document).ready(function(){
+
+        loadRatesMovies();
+        
+        getGenresMovies();
+        
+        owlCarousel();
+
+
+        //ON CLICKS ----------------------
+    
+        $(".card-genre").on('click', function() {
+            console.log("aaaaa")
+            var cardID = $(this).attr('id');
+            localStorage.setItem('shop-genre', cardID);
+            location.href="index.php?page=shop";
+        });
+    
+        $(".option").click(function(){
+            $(".option").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        //END- ON CLICKS -----------------
+    
+    });

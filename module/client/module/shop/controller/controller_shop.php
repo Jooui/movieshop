@@ -26,6 +26,12 @@ switch($_GET['op']){
 
     break;
 
+    case 'getMoviesFilterGenres';
+
+        
+
+    break;
+
     default:
         include("module/client/module/shop/view/listFilms.php");
     break;

@@ -1,10 +1,21 @@
 var numItemsShop = 0;
+var idGenreOnLocalStorage = localStorage.getItem('shop-genre');
+var urlAjax = "";
 $(document).ready(function(){
-
+    console.log(localStorage.getItem('shop-genre'));
     loadItems();
     loadItemsOnScroll();
     
 });
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+     if ((new Date().getTime() - start) > milliseconds) {
+      break;
+     }
+    }
+   }
 
 function loadItemsOnScroll(){
     $(window).scroll(function() {
@@ -16,6 +27,12 @@ function loadItemsOnScroll(){
 
 function loadItems(){
     numItemsShop = $('.card-shop').length;
+    if (idGenreOnLocalStorage == null){
+        urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
+    }else{
+        urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesFilterGenres";
+    }
+
     $.ajax({
         type: 'GET',
         url: '/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies',
@@ -23,11 +40,23 @@ function loadItems(){
         async: false,
         data:{"limit":20,"offset":numItemsShop},
         beforeSend: function() {
-
+            
         },
         success: function (data) { //$data es toda la informacion que nos retorna el ajax
           //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
             console.log(data);
+            //sql: select f.* from films f inner join films_genres g on f.id = g.id_film where g.id_genre in (2)
+            //for select every films of the selected genre (in LocalStorage)
+
+
+            $("#loadingGif").html(
+                
+                '<img src="module/client/view/img/loadingGif.gif" class="loading-gif" alt="Loading">'
+                
+            );
+            sleep(1000);
+            
+            //$('.loading-gif').remove();
 
            for(i = 0; i < data.length; i++){
                 
