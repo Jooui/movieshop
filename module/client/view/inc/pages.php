@@ -18,7 +18,7 @@ if (isset($_GET['page'])){
 			include($path."view/inc/error".$_GET['page'].".php");
 			break;
 		case "shop";
-			include($path."module/shop/view/listFilms.html");
+			include($path."module/shop/view/shop.html");
 			//include($path."module/shop/controller/controller_shop.php");
 			break;
 		case "contact";

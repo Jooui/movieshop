@@ -1,21 +1,29 @@
 var numItemsShop = 0;
 var idGenreOnLocalStorage = localStorage.getItem('shop-genre');
 var urlAjax = "";
+
 $(document).ready(function(){
     console.log(localStorage.getItem('shop-genre'));
     loadItems();
     loadItemsOnScroll();
     
+
+    //ON CLICKS
+
+    $('.get-details').on('click', function() {
+        console.log("aaaa");
+    });
+
 });
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
-     if ((new Date().getTime() - start) > milliseconds) {
-      break;
-     }
+        if ((new Date().getTime() - start) > milliseconds) {
+        break;
+        }
     }
-   }
+}
 
 function loadItemsOnScroll(){
     $(window).scroll(function() {
@@ -35,10 +43,10 @@ function loadItems(){
 
     $.ajax({
         type: 'GET',
-        url: '/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies',
+        url: urlAjax,
         dataType: 'json',
         async: false,
-        data:{"limit":20,"offset":numItemsShop},
+        data:{"limit":20,"offset":numItemsShop,"genres":idGenreOnLocalStorage},
         beforeSend: function() {
             
         },
@@ -65,7 +73,7 @@ function loadItems(){
               
                 $("#cardsContainer").append(
                     '<div class="card-shop">'+
-                        '<div class="card-shop-img">'+
+                        '<div class="card-shop-img get-details">'+
                            ' <img class="img-size" src="'+$urlCoverImage+'">'+
     
                         '</div>'+
@@ -76,7 +84,7 @@ function loadItems(){
                             '<i class="fa fa-bars"></i>'+
                         '</div>'+
     
-                        '<div class="card-shop-footer">'+
+                        '<div class="card-shop-footer get-details">'+
                             '<div class="effect-3d"></div>'+
                             '<div class="card-footer-text">'+
                                 '<span>'+data[i].title+'</span>'+

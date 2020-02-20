@@ -44,6 +44,7 @@ $(document).ready(function(){
     });
 
     $('#shop').on('click', function() {
+        localStorage.removeItem("shop-genre");
         location.href="index.php?page=shop";
     });
 
