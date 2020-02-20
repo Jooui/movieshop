@@ -12,6 +12,12 @@ $(document).ready(function(){
 
     $('.get-details').on('click', function() {
         console.log("aaaa");
+        $('#cardsContainer').empty();
+        $('#details-movie').append(
+            "<div>"+
+            "<h1>aaaaa</h1>"+
+            "</div>"
+        );
     });
 
 });
