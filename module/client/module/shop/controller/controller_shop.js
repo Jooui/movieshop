@@ -7,18 +7,7 @@ $(document).ready(function(){
     loadItems();
     loadItemsOnScroll();
     
-
-    //ON CLICKS
-
-    $('.get-details').on('click', function() {
-        console.log("aaaa");
-        $('#cardsContainer').empty();
-        $('#details-movie').append(
-            "<div>"+
-            "<h1>aaaaa</h1>"+
-            "</div>"
-        );
-    });
+    getDetails();
 
 });
 
@@ -36,6 +25,46 @@ function loadItemsOnScroll(){
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
             loadItems();
         }
+    });
+}
+
+function getDetails(){
+    $('.get-details').on('click', function() {
+        console.log("aaaa");
+
+        var card = $(this).parent('.card-shop');
+        var id = card.attr('id');
+        console.log(id);
+        $.ajax({
+            type: 'GET',
+            url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovieById",
+            dataType: 'json',
+            async: false,
+            data:{"id":id},
+            success: function (data) {
+                console.log(data[0]);
+                $('#cardsContainer').empty();
+                $('#loadingGif').empty();
+                $('#details-movie').append(
+                    "<div>"+
+                        "<div class='movie-info'>"+
+                            "<img src='"+data[0].coverimg+"' alt='img movie'>"+
+                            "<div class=''>"+
+                                "<h1>"+data[0].title+"</h1>"+
+                                '<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>'+
+                            "</div>"+
+                        "</div>"+
+                        
+                    
+                    "</div>"
+                );
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+
+        
     });
 }
 
@@ -78,7 +107,7 @@ function loadItems(){
     
               
                 $("#cardsContainer").append(
-                    '<div class="card-shop">'+
+                    '<div class="card-shop" id="'+data[i].id+'">'+
                         '<div class="card-shop-img get-details">'+
                            ' <img class="img-size" src="'+$urlCoverImage+'">'+
     

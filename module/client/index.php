@@ -2,20 +2,25 @@
 if (isset($_GET['page'])){
 	switch($_GET['page']){
 		case "shop":
-			include("view/inc/top_pages/top_page_shop.php");
+			include("module/shop/view/inc/top_page_shop.php");
 		break;
 		case "contact":
-			include("view/inc/top_pages/top_page_contact.php");
+			include("module/contact/view/inc/top_page_contact.php");
 		break;
 	}
 }else{
-	include("view/inc/top_pages/top_page.php");
+	include("module/home/view/inc/top_page.php");
 }
 
 ?>
 <!-- <body>  -->
 		<header>
-			<?php include("view/inc/header.php"); ?>
+			<?php 
+			if (!isset($_GET['page'])){
+				include("module/client/module/home/view/inc/header.html"); 
+			}else{
+				include("module/client/module/".$_GET['page']."/view/inc/header.html"); 
+			}?>
 		</header>
 
 		<main>

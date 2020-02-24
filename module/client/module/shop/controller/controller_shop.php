@@ -14,6 +14,14 @@ switch($_GET['op']){
 
     break;
 
+    case 'getMovieById';
+        $movie = getMovieById($_GET['id']);
+
+        echo json_encode($movie);
+        exit;
+
+    break;
+
     case 'getMovies';
 
         $movies = getLimitMovies($_GET['limit'],$_GET['offset']);

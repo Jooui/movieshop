@@ -2,7 +2,7 @@
 $path = $_SERVER['DOCUMENT_ROOT'].'/movieshop/module/client/';
 if (isset($_GET['page'])){
 	switch($_GET['page']){
-		case "homepage";
+		case "home";
 			include($path."module/home/view/homepage.html");
 			break;
 		case "controller";

@@ -24,6 +24,16 @@ function getLimitMovies($nlimit,$noffset){ //Get limited data from Films by offs
     
 }
 
+function getMovieById($id){
+    $connection = new connection();
+    $query = $connection->prepare('SELECT * FROM Films WHERE id = :id');
+    $query->bindParam(':id', $id);
+    $query->execute();
+    $connection = null;
+    //return $query->fetchObject();
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
 function getLimitMoviesByGenre($nlimit,$noffset,$genres){ //Get limited data filtered by genres
     $connection = new connection();
     $genreToString = $genres."";

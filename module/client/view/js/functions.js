@@ -2,7 +2,7 @@
 $(document).ready(function(){
 
     //CHANGE HEADER-MAIN OPACITY WHILE SCROLLING DOWN
-    $(window).scroll(function() {
+    /*$(window).scroll(function() {
         var scrollTop = $(this).scrollTop();
         $(".header").css({
             "background-color": function(){
@@ -14,7 +14,7 @@ $(document).ready(function(){
         });
         
         // console.log(scrollTop);
-    }); 
+    });*/
 
     //FUNCTION FOR CHANGE THE LENGTH OF BORDER-BOTTOM
     /*$( "#header-login" ).hover(
