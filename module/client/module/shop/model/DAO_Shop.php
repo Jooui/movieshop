@@ -24,7 +24,7 @@ function getLimitMovies($nlimit,$noffset){ //Get limited data from Films by offs
     
 }
 
-function getMovieById($id){
+function getMovie($id){
     $connection = new connection();
     $query = $connection->prepare('SELECT * FROM Films WHERE id = :id');
     $query->bindParam(':id', $id);
@@ -32,6 +32,36 @@ function getMovieById($id){
     $connection = null;
     //return $query->fetchObject();
     return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
+function getGenresOfFilm($id){
+        
+    $connection = new connection();
+    $query = $connection->prepare('SELECT genre FROM `genres` WHERE id IN (SELECT id_genre FROM `films_genres` where id_film = '.$id.')');
+    $query->execute();             
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
+function getGenresToString($id){
+    
+    $genres = getGenresOfFilm($id);
+    
+    $str1  = "";
+    for ($i = 0; $i < sizeof($genres); $i++ ){
+        $str1 = $str1 . $genres[$i]->genre . ",";
+    }
+
+    //remove last character ":"
+    $str = substr($str1, 0, -1);
+    return $str;
+}
+
+function getMovieById($id){
+    $arrayMovie = getMovie($id);
+    $genres = getGenresOfFilm($id);
+    $arrayMovie['genres'] = $genres;
+    return $arrayMovie;
 }
 
 function getLimitMoviesByGenre($nlimit,$noffset,$genres){ //Get limited data filtered by genres

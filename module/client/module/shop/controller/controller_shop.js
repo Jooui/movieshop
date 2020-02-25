@@ -46,17 +46,21 @@ function getDetails(){
                 $('#cardsContainer').empty();
                 $('#loadingGif').empty();
                 $('#details-movie').append(
-                    "<div>"+
                         "<div class='movie-info'>"+
-                            "<img src='"+data[0].coverimg+"' alt='img movie'>"+
-                            "<div class=''>"+
+                            '<div class="details-left">'+
+                                "<img src='"+data[0].coverimg+"' alt='img movie'>"+
+                                '<div class="flex-row-center"><span data-tr="score"></span><span>'+data[0].score+'</span></div>'+
+                                '<span data-tr="Date:"></span>'+
+                                '<span>'+data[0].release_date+'</span>'+
+                                '<span data-tr="Genres:"></span>'+
+                                '<span>'+data[0].genres+'</span>'+
+                            '</div>'+
+                            
+                            "<div class='details-right'>"+
                                 "<h1>"+data[0].title+"</h1>"+
                                 '<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>'+
                             "</div>"+
-                        "</div>"+
-                        
-                    
-                    "</div>"
+                        "</div>"
                 );
             },
             error: function(data) {

@@ -21,6 +21,14 @@
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
+    function saveGenre($data){ //returns the last object created
+        $connection = new connection();
+        $query = $connection->prepare('INSERT INTO ' . 'genres' . ' (genre) VALUES (:genre)');
+        $query->bindParam(':genre', $data);
+        $query->execute();
+        $connection = null;
+    }
+
     function getGenresOfFilm($id){
         
         $connection = new connection();
@@ -28,14 +36,6 @@
         $query->execute();             
         $connection = null;
         return $query->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    function saveGenre($data){ //returns the last object created
-        $connection = new connection();
-        $query = $connection->prepare('INSERT INTO ' . 'genres' . ' (genre) VALUES (:genre)');
-        $query->bindParam(':genre', $data);
-        $query->execute();
-        $connection = null;
     }
 
     function getGenresToString($id){
