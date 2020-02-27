@@ -3,7 +3,7 @@
 
 	function validate_film_php($type){
 		$error='';
-		if ($type == "edit" && getTitleById($_GET['id'])!=$_POST['title']){
+		if ($type != "edit"){
 			
 			if(findByTitle($_POST['title'])){
 				$error='This film already exists';

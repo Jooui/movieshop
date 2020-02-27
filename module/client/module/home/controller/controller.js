@@ -13,7 +13,7 @@ function loadRatesMovies(){
             for(i = 0; i < 10; i++){
                 $urlCoverImage = data[i].coverimg;
                 $("#top-rated-movies").append(
-                    '<div class="item movie-carousel">'+
+                    '<div class="item movie-carousel" id="'+data[i].id+'">'+
                         //'<img src="'+$urlCoverImage+'" style="width=170px; height: 230px;">'+
                         '<img src="'+$urlCoverImage+'">'+
                         '<div class="canvas-score">'+
@@ -29,8 +29,13 @@ function loadRatesMovies(){
                     '</div>'
                 );
     
-            }  
-            
+            }
+            $('.movie-carousel').on('click', function() {
+                id = $(this).attr('id');
+                localStorage.setItem('movie-details',id);
+                location.href="index.php?page=shop";
+            });
+                         
         },
         error: function(){
           console.log("error");

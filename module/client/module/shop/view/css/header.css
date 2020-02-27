@@ -8,6 +8,8 @@ header{
     background-image: url("../../../../view/img/Netflix-Background.jpg");*/
     background-position: center;
     background-repeat: no-repeat;
+    position: fixed;
+    z-index: 10;
 }
 
 .header{
@@ -15,8 +17,6 @@ header{
     height: 65px;
     background-color: rgb(36, 32, 32);
     /*background-color: rgba(50, 50, 50, 0.0);*/
-    position: fixed;
-    z-index: 10;
 }
 
 .header-logo{

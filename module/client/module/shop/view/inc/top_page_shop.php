@@ -27,7 +27,9 @@
 	<link href="module/client/module/shop/view/css/header.css" rel="stylesheet" type="text/css" />
 	<link href="module/client/module/shop/view/css/cards.css" rel="stylesheet" type="text/css" />
 	<link href="module/client/module/shop/view/css/details.css" rel="stylesheet" type="text/css" />
-	
+	<link href="module/client/module/shop/view/css/filters.css" rel="stylesheet" type="text/css" />
+	<link href="module/client/module/shop/view/css/style.css" rel="stylesheet" type="text/css" />
+
 	<script src="module/client/module/shop/controller/controller_shop.js"></script>
 	<script src="module/client/module/shop/view/js/shop-cards.js"></script>
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>

@@ -3,13 +3,23 @@ var idGenreOnLocalStorage = localStorage.getItem('shop-genre');
 var urlAjax = "";
 
 $(document).ready(function(){
-    console.log(localStorage.getItem('shop-genre'));
-    loadItems();
-    loadItemsOnScroll();
-    
-    getDetails();
-
+    console.log(localStorage.getItem('movie-details'));
+    if(localStorage.getItem('movie-details')=="null"){
+        console.log("aaa")
+        loadItems();
+        loadItemsOnScroll();
+    }else{
+        printDetails(localStorage.getItem('movie-details'));
+    }
 });
+
+function backArrow(){
+    $('.back-arrow').on('click', function() {
+        console.log("click");
+        localStorage.setItem('movie-details',null);
+        location.reload();
+    });
+}
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
@@ -34,45 +44,54 @@ function getDetails(){
 
         var card = $(this).parent('.card-shop');
         var id = card.attr('id');
-        console.log(id);
-        $.ajax({
-            type: 'GET',
-            url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovieById",
-            dataType: 'json',
-            async: false,
-            data:{"id":id},
-            success: function (data) {
-                console.log(data[0]);
-                $('#cardsContainer').empty();
-                $('#loadingGif').empty();
-                $('#details-movie').append(
-                        "<div class='movie-info'>"+
-                            '<div class="details-left">'+
-                                "<img src='"+data[0].coverimg+"' alt='img movie'>"+
-                                '<div class="flex-row-center"><span data-tr="score"></span><span>'+data[0].score+'</span></div>'+
-                                '<span data-tr="Date:"></span>'+
-                                '<span>'+data[0].release_date+'</span>'+
-                                '<span data-tr="Genres:"></span>'+
-                                '<span>'+data[0].genres+'</span>'+
-                            '</div>'+
-                            
-                            "<div class='details-right'>"+
-                                "<h1>"+data[0].title+"</h1>"+
-                                '<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>'+
-                            "</div>"+
-                        "</div>"
-                );
-            },
-            error: function(data) {
-                console.log(data);
-            }
-        });
-
+        localStorage.setItem('movie-details',id);
+        
+        printDetails(id);
         
     });
 }
 
+function printDetails(id){
+    $.ajax({
+        type: 'GET',
+        url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovieById",
+        dataType: 'json',
+        async: false,
+        data:{"id":id},
+        success: function (data) {
+            
+            console.log(data[0]);
+            $('#cardsContainer').empty();
+            $('.filters').hide();
+            $('#loadingGif').empty();
+            $('#details-movie').append(
+                    '<i class="fas fa-arrow-left back-arrow"></i>'+
+                    '<img src="module/client/view/img/banner-movie.jpg" class="img-banner-movie" alt="Banner movie">'+
+                    "<div class='movie-info'>"+
+                        '<div class="details-left">'+
+                            "<img src='"+data[0].coverimg+"' id='img-movie' alt='img movie'>"+
+                            '<div class="separator"></div>'+
+                            '<div class="flex-row-center"><span data-tr="score">Score: </span><span>'+data[0].score+'</span></div>'+
+                            '<div class="flex-row-center"><span data-tr="Date:">Date: </span><span>'+data[0].release_date+'</span></div>'+
+                            '<div class="flex-row-center"><span data-tr="Genres:">Genres: </span><span>'+data[0].genres+'</span></div>'+
+                        '</div>'+
+                        
+                        "<div class='details-right'>"+
+                            "<h1 id='title-movie'>"+data[0].title+"</h1>"+
+                            '<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>'+
+                        "</div>"+
+                    "</div>"
+            );
+            backArrow();
+        },
+        error: function(data) {
+            console.log(data);
+        }
+    });
+}
+
 function loadItems(){
+    //localStorage.setItem('movie-details',null);
     numItemsShop = $('.card-shop').length;
     if (idGenreOnLocalStorage == null){
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
@@ -86,12 +105,10 @@ function loadItems(){
         dataType: 'json',
         async: false,
         data:{"limit":20,"offset":numItemsShop,"genres":idGenreOnLocalStorage},
-        beforeSend: function() {
-            
-        },
         success: function (data) { //$data es toda la informacion que nos retorna el ajax
           //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
             console.log(data);
+            console.log("data");
             //sql: select f.* from films f inner join films_genres g on f.id = g.id_film where g.id_genre in (2)
             //for select every films of the selected genre (in LocalStorage)
 
@@ -143,7 +160,8 @@ function loadItems(){
                     '</div>'
                 );
             } 
-            
+            getDetails();
+            backArrow();
         },
         error: function(){
           console.log("error");

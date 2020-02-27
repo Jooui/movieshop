@@ -45,6 +45,7 @@ $(document).ready(function(){
 
     $('#shop').on('click', function() {
         localStorage.removeItem("shop-genre");
+        localStorage.setItem("movie-details",null);
         location.href="index.php?page=shop";
     });
 
