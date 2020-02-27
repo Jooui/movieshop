@@ -27,8 +27,6 @@
 
 			'release_date' => $_POST['release_date'],
 
-			'genres' => $_POST['genres'],
-
 			'score' => 0,
 
 			'coverimg' => "module/admin/view/img/delfault-img-film.png"

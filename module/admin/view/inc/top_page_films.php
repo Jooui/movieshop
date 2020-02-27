@@ -44,7 +44,9 @@
 	<!-- Datepicker create film -->
 	<script>
   		$(function() {
-    		$( "#release_date" ).datepicker();
+    		$( "#release_date" ).datepicker({
+				dateFormat: 'yy/mm/dd'
+			});
 		});
   	</script>
 

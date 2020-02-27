@@ -11,6 +11,12 @@
     switch($_GET['op']){
 
         case 'dummies';
+            try{
+                generateDummies();
+            }catch (Exception $e){
+                $callback = 'index.php?page=503';
+                die('<script>window.location.href="'.$callback .'";</script>');
+            }
             generateDummies();
             $callback="index.php?page=controller_films&op=list";
             Browser::redirect($callback);
@@ -19,11 +25,14 @@
         break;
 
         case 'addGenres';
-
-            saveGenre($_POST['genre']);
-            echo json_encode($_POST['genre']);
-            exit;
-
+            try{
+                saveGenre($_POST['genre']);
+                echo json_encode($_POST['genre']);
+                exit;
+            }catch (Exception $e){
+                $callback = 'index.php?page=503';
+                die('<script>window.location.href="'.$callback .'";</script>');
+            }
         break;
 
         case 'getGenres';
@@ -46,8 +55,14 @@
 
         break;
 
-        case 'deleteAll';  
-            deleteAll();
+        case 'deleteAll';
+            try{
+                deleteAll();
+            }catch (Exception $e){
+                $callback = 'index.php?page=503';
+                die('<script>window.location.href="'.$callback .'";</script>');
+            }
+            
             $callback="index.php?page=controller_films&op=list";
             Browser::redirect($callback);
             die;
@@ -69,7 +84,13 @@
     		}else{
                 include("module/user/view/list_films.php");
             }*/
-            include("module/admin/module/films/view/list_films.php");
+            try{
+                include("module/admin/module/films/view/list_films.php");
+            }catch (Exception $e){
+                $callback = 'index.php?page=503';
+                die('<script>window.location.href="'.$callback .'";</script>');
+            }
+            
             break;
             
         case 'create';
@@ -80,15 +101,16 @@
                 if ($result['resultado']) {
                     //Insert data on table
 
-                    $saveData = save($result);
-         
-                    foreach ($result['datos']['genres'] as $gen){
-                        saveGenresFilm($saveData[0]->id,$gen);
+                    try{
+                        $saveData = save($result);
+                        foreach ($result['datos']['genres'] as $gen){
+                            saveGenresFilm($saveData[0]->id,$gen);
+                        }
+                    }catch (Exception $e){
+                        $callback = 'index.php?page=503';
+                        die('<script>window.location.href="'.$callback .'";</script>');
                     }
-        
-                    
-                    
-                               
+
                     //redirect
                     $callback="index.php?page=controller_films&op=list";
                     Browser::redirect($callback);
@@ -134,6 +156,7 @@
             }*/
             //include("module/films/view/show_film.php");
             $film = getById($_GET['idfilm']);
+            $film['genres'] = getGenresToString($_GET['idfilm']);
             //$film2 = get_object_vars($film);
             echo json_encode($film);
             exit;

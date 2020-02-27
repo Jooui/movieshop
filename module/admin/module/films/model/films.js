@@ -49,8 +49,7 @@ function deleteAll(){
 }
 
 /* <option value="1">January</option> */
-
-$( document ).ready(function() {
+function newGenre(){
   $('#button_new_genre').on('click', function() {
     var genre = $('#new_genre').val();
     
@@ -69,8 +68,9 @@ $( document ).ready(function() {
     });
 
   });
-    
+}
 
+function loadGenresCreate(){
   $.ajax({
     type: 'GET',
     url: '/movieshop/module/admin/module/films/controller/controller_films.php?op=getGenres',
@@ -89,12 +89,13 @@ $( document ).ready(function() {
     }
   });
 
-$('#genres').multipleSelect({
-  minimumCountSelected: 8,
-  selectAll: false
-});
+  $('#genres').multipleSelect({
+    minimumCountSelected: 8,
+    selectAll: false
+  });
+}
 
-
+function modalView(){
   $('.viewFilm').on('click', function() {
     event.preventDefault();
     this.blur();
@@ -106,7 +107,7 @@ $('#genres').multipleSelect({
         data:{"idfilm":id}, //idfilm es el nombre de la variable: $_GET['idfilm'] i id es la variable anteriormente declarada
         success: function (data) { //$data es toda la informacion que nos retorna el ajax
           //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
-
+          console.log(data);
           $("#show-film-modal").html(
               '<br><span>ID:   <span>'+data[0].id+'</span></span></br>'+
               '<br><span>Title:   <span>'+data[0].title+'</span></span></br>'+
@@ -119,7 +120,7 @@ $('#genres').multipleSelect({
           console.log("error");
         }
       });
-
+      console.log("aaaa");
 
       var detailsArray = $('#show-film-modal');
       var details = detailsArray[0];
@@ -136,9 +137,6 @@ $('#genres').multipleSelect({
         },
       })
 
-
-
-
 /*
       $("#show-film-modal").dialog({
         width: 850, //<!-- ------------- ancho de la ventana -->
@@ -153,13 +151,19 @@ $('#genres').multipleSelect({
       });*/
 
     });
+}
 
-    $('#table_list_films').dataTable({
-      "bPaginate": true,
-      "bLengthChange": true,
-      "bFilter": true,
-      "bInfo": true,
-      "bAutoWidth": true 
-    });
+$( document ).ready(function() {
+  newGenre();
+  loadGenresCreate();
+  modalView();
+
+  $('#table_list_films').dataTable({
+    "bPaginate": true,
+    "bLengthChange": true,
+    "bFilter": true,
+    "bInfo": true,
+    "bAutoWidth": true 
+  });
 });
 $('.dataTables_length').addClass('bs-select');

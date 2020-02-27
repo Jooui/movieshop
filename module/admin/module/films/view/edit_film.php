@@ -21,6 +21,16 @@
 			<input id="release_date" class="form-control" type="text" name="release_date" readonly="readonly" value="<?php echo $film[0]->release_date; ?>">
 			<span id="e_release_date" class="styerror"></span>
 		</div>
+
+		<label for="genres">Genres: </label>
+		<select id="genres" name = 'genres[]' multiple="multiple"></select>
+
+		<span id="e_genres" class="styerror"></span>
+		<br>
+		<label for="genres">Image: </label>
+
+		<br>
+
 		<input name="Submit" class="btn btn-primary" id="registerBtn" type="button" value="Edit" onclick="validate_film('edit')" />
 		<input name="Submit" class="btn btn-danger" type="button" value="Back" onclick='top.location.href="index.php?page=controller_films&op=list"' />
 

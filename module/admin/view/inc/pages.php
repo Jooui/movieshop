@@ -23,7 +23,7 @@ if (isset($_GET['page'])){
 			include("module/admin/view/inc/error".$_GET['page'].".php");
 			break;
 		default;
-			include("module/admin/module/home/view/homepage.php");
+			include("module/admin/view/inc/error404.php");
 			break;
 	}
 }else{
