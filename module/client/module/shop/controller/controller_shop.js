@@ -8,6 +8,7 @@ $(document).ready(function(){
         console.log("aaa")
         loadItems();
         loadItemsOnScroll();
+        loadFilters();
     }else{
         printDetails(localStorage.getItem('movie-details'));
     }
@@ -49,6 +50,18 @@ function getDetails(){
         printDetails(id);
         
     });
+}
+
+function loadFilters(){
+    $('#filters-shop').append(
+        '<h1 class="title-filters">Filters</h1>'+
+        '<hr>'+
+        '<span class="title-section">Order by:</span>'+
+        '<div class="item-filter">'+
+            '<span class="sub-title-filter">Release Date: </span>'+
+            '<select id="cars"><option value="volvo">Volvo</option><option value="opel">Opel</option></select>'+
+        '</div>'
+    );
 }
 
 function printDetails(id){

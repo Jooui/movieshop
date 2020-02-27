@@ -1,8 +1,7 @@
 #shopContainer{
     margin-bottom: 100px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row
 }
 
 #loadingGif{
@@ -22,6 +21,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    width: 78%;
 }
 
 .card-shop{
