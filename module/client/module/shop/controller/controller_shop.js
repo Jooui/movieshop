@@ -59,7 +59,21 @@ function loadFilters(){
         '<span class="title-section">Order by:</span>'+
         '<div class="item-filter">'+
             '<span class="sub-title-filter">Release Date: </span>'+
-            '<select id="cars"><option value="volvo">Volvo</option><option value="opel">Opel</option></select>'+
+            '<select id="date-select"><option value="ascendent">Ascendent</option><option value="descendent">Descendent</option></select>'+
+        '</div>'+
+        '<div class="item-filter">'+
+            '<span class="sub-title-filter">Alphabetically: </span>'+
+            '<select id="alph-select"><option value="ascendent">Ascendent</option><option value="descendent">Descendent</option></select>'+
+        '</div>'+
+        '<div class="item-filter">'+
+            '<span class="sub-title-filter">Rating: </span>'+
+            '<select id="rating-select"><option value="ascendent">Ascendent</option><option value="descendent">Descendent</option></select>'+
+        '</div>'+
+        '<hr>'+
+        '<span class="title-section">Genres: </span>'+
+        '<div class="genres-wrapper">'+
+            '<label><input type="checkbox" id="1" value="action">Action</label><br>'+
+            '<label><input type="checkbox" id="2" value="drama">Drama</label><br>'+
         '</div>'
     );
 }
