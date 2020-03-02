@@ -11,6 +11,12 @@ switch($_GET['op']){
         include("module/client/module/shop/view/shop.html");
     break;
 
+    case 'getGenresFilters';
+        
+        $genres = getAllGenres();
+        
+        echo json_encode($genres);
+        exit;
 
     break;
 
@@ -32,13 +38,21 @@ switch($_GET['op']){
     break;
 
     case 'getMoviesFilterGenres';
-        // echo json_encode($_GET['genres']);
-        // exit;
         
         $movies = getLimitMoviesByGenre($_GET['limit'],$_GET['offset'],$_GET['genres']);
 
         echo json_encode($movies);
         exit;
+
+    break;
+
+    case 'getMoviesCheckBox';
+        
+        $movies = getMoviesFiltersGenres($_GET['limit'],$_GET['offset'],$_GET['idsGenres']);
+
+        echo json_encode($movies);
+        exit;
+        
     break;
 
     default:

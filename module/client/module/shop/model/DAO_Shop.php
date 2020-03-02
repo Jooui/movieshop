@@ -34,11 +34,30 @@ function getMovie($id){
     return $query->fetchAll(PDO::FETCH_OBJ);
 }
 
+function getMoviesFiltersGenres($nlimit,$noffset,$genres){
+    $connection = new connection();
+    $query = $connection->prepare('select distinct f.* from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.') LIMIT :a OFFSET :b');
+    $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
+    $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
+    $query->execute();             
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
+
 function getGenresOfFilm($id){
         
     $connection = new connection();
     $query = $connection->prepare('SELECT genre FROM `genres` WHERE id IN (SELECT id_genre FROM `films_genres` where id_film = '.$id.')');
     $query->execute();             
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
+function getAllGenres(){
+    $connection = new connection();
+    $query = $connection->prepare('SELECT * FROM genres');
+    $query->execute();
     $connection = null;
     return $query->fetchAll(PDO::FETCH_OBJ);
 }

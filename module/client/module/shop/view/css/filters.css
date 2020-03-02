@@ -4,7 +4,7 @@
 }
 
 #filters-shop{
-    height: 750px;
+    height: auto;
     background-color: rgb(41, 40, 40);
     width: 22%;
     padding: 0px 20px;
@@ -36,4 +36,14 @@
     display: flex;
     justify-content: space-between;
     margin: 12px 12px;
+}
+
+.genre-filter{
+    margin-right: 5px;
+}
+
+.label-genre{
+    display: flex;
+    align-items: center;
+    color: rgb(248, 211, 0);
 }

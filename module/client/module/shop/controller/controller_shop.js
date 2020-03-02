@@ -9,6 +9,8 @@ $(document).ready(function(){
         loadItems();
         loadItemsOnScroll();
         loadFilters();
+        onClickGenre();
+        // loadGenresCreate();
     }else{
         printDetails(localStorage.getItem('movie-details'));
     }
@@ -29,6 +31,32 @@ function sleep(milliseconds) {
         break;
         }
     }
+}
+
+function onClickGenre(){
+    $('.genre-filter').on('click',function() {
+        $('#cardsContainer').empty();
+        loadItems("checkbox");
+        if (getValuesFilters()==null){
+            loadItems();
+        }
+    });
+}
+
+function getValuesFilters(){
+        lengthGenres = $('.genre-filter').length;
+        films = $('.genre-filter');
+        var idGenres1 = "";
+        for (x=0; x<lengthGenres;x++){
+            if(films[x].checked){
+                idGenres1 = idGenres1+films[x].getAttribute('id')+",";
+            }
+        }
+        if (idGenres1 == ""){
+            return null;
+        }
+        idGenres = idGenres1.substring(0, idGenres1.length - 1);
+        return idGenres;
 }
 
 function loadItemsOnScroll(){
@@ -72,11 +100,48 @@ function loadFilters(){
         '<hr>'+
         '<span class="title-section">Genres: </span>'+
         '<div class="genres-wrapper">'+
-            '<label><input type="checkbox" id="1" value="action">Action</label><br>'+
-            '<label><input type="checkbox" id="2" value="drama">Drama</label><br>'+
+            // '<label class="label-genre"><input type="checkbox" id="1" value="action" class="genre-filter">Action</label>'+
+            // '<label class="label-genre"><input type="checkbox" id="2" value="drama" class="genre-filter">Drama</label>'+
         '</div>'
     );
+    $.ajax({
+        type: 'GET',
+        url: '/movieshop/module/client/module/shop/controller/controller_shop.php?op=getGenresFilters',
+        dataType: 'json',
+        async: false,
+        data:{},
+        success: function (data) { //$data es toda la informacion que nos retorna el ajax
+            for(i = 0; i < data.length; i++){
+                $(".genres-wrapper").append(
+                    '<label class="label-genre"><input type="checkbox" id="'+data[i].id+'" value="'+data[i].id+'" class="genre-filter">'+data[i].genre+'</label>'
+                );
+            }
+        },
+        error: function(data){
+          console.log("error: "+data);
+        }
+      });
 }
+
+// function loadGenresCreate(){
+//     $.ajax({
+//       type: 'GET',
+//       url: '/movieshop/module/client/module/shop/controller/controller_shop.php?op=getGenresFilters',
+//       dataType: 'json',
+//       async: false,
+//       data:{},
+//       success: function (data) { //$data es toda la informacion que nos retorna el ajax
+//           for(i = 0; i < data.length; i++){
+//               $(".genres-wrapper").append(
+//                   '<label class="label-genre"><input type="checkbox" id="'+data[i].id+'" value="'+data[i].id+'" class="genre-filter">'+data[i].genre+'</label>'
+//               );
+//           }
+//       },
+//       error: function(data){
+//         console.log("error: "+data);
+//       }
+//     });
+//   }
 
 function printDetails(id){
     $.ajax({
@@ -117,21 +182,28 @@ function printDetails(id){
     });
 }
 
-function loadItems(){
+function loadItems(type = "default"){
     //localStorage.setItem('movie-details',null);
+    console.log(getValuesFilters());
     numItemsShop = $('.card-shop').length;
+
     if (idGenreOnLocalStorage == null){
+        console.log("entra if 1");
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
     }else{
+        console.log("entra if 3");
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesFilterGenres";
     }
-
+    if(type != "default"){
+        console.log("ENTRA AL ELSE IF");
+        urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesCheckBox";
+    }
     $.ajax({
         type: 'GET',
         url: urlAjax,
         dataType: 'json',
         async: false,
-        data:{"limit":20,"offset":numItemsShop,"genres":idGenreOnLocalStorage},
+        data:{"limit":20,"offset":numItemsShop,"genres":idGenreOnLocalStorage,"idsGenres":getValuesFilters()},
         success: function (data) { //$data es toda la informacion que nos retorna el ajax
           //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
             console.log(data);

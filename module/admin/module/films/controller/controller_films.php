@@ -37,10 +37,10 @@
 
         case 'getGenres';
         
-        $genres = getAllGenres();
-        
-        echo json_encode($genres);
-        exit;
+            $genres = getAllGenres();
+            
+            echo json_encode($genres);
+            exit;
 
         break;
 
