@@ -10,7 +10,8 @@ $(document).ready(function(){
         loadItemsOnScroll();
         loadFilters();
         onClickGenre();
-        // loadGenresCreate();
+    }else if(localStorage){
+
     }else{
         printDetails(localStorage.getItem('movie-details'));
     }
@@ -43,20 +44,70 @@ function onClickGenre(){
     });
 }
 
+function onClickOrder(){
+    $('.order-filter').on('click',function() {
+        $('#cardsContainer').empty();
+        type = $(this).attr("id");
+        mode = $(this).val();
+        console.log("-----------ARGUMENTOS----------");
+        console.log(type);
+        console.log(mode);
+        filterOrder(type,mode);
+    });
+}
+
+function filterOrder(type,mode){ //mode contiene ASC or DESC || type contiene que filtro es, es decir, date,alph etc
+    switch (type) {
+        case 'date-select':
+            loadItems("select-date");
+
+            break;
+    
+
+        case 'alph-select':
+        
+
+            break;
+
+
+        case 'rating-select':
+    
+
+            break;
+    }
+}
+
+function checkGenres(){
+    totalGenres = $('.genre-filter');
+    var arrayChecks = localStorage.getItem('genresChecked').split(',');
+    console.log(arrayChecks);
+    for (x=0; x<arrayChecks.length;x++){
+        console.log(arrayChecks[x]);
+        for (i=0; i<totalGenres.length;i++){
+            console.log(totalGenres[x].val);
+           if (arrayChecks.includes(totalGenres[x])){
+               totalGenres[i].prop('checked',true);
+           }    
+        }
+    }
+}
+
 function getValuesFilters(){
-        lengthGenres = $('.genre-filter').length;
-        films = $('.genre-filter');
-        var idGenres1 = "";
-        for (x=0; x<lengthGenres;x++){
-            if(films[x].checked){
-                idGenres1 = idGenres1+films[x].getAttribute('id')+",";
-            }
+    lengthGenres = $('.genre-filter').length;
+    films = $('.genre-filter');
+    var idGenres1 = "";
+    for (x=0; x<lengthGenres;x++){
+        if(films[x].checked){
+            idGenres1 = idGenres1+films[x].getAttribute('id')+",";
         }
-        if (idGenres1 == ""){
-            return null;
-        }
-        idGenres = idGenres1.substring(0, idGenres1.length - 1);
-        return idGenres;
+    }
+    if (idGenres1 == ""){
+        localStorage.setItem('genresChecked',null);
+        return null;
+    }
+    idGenres = idGenres1.substring(0, idGenres1.length - 1);
+    localStorage.setItem('genresChecked',idGenres);
+    return idGenres;
 }
 
 function loadItemsOnScroll(){
@@ -87,15 +138,15 @@ function loadFilters(){
         '<span class="title-section">Order by:</span>'+
         '<div class="item-filter">'+
             '<span class="sub-title-filter">Release Date: </span>'+
-            '<select id="date-select"><option value="ascendent">Ascendent</option><option value="descendent">Descendent</option></select>'+
+            '<select id="date-select" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
         '</div>'+
         '<div class="item-filter">'+
             '<span class="sub-title-filter">Alphabetically: </span>'+
-            '<select id="alph-select"><option value="ascendent">Ascendent</option><option value="descendent">Descendent</option></select>'+
+            '<select id="alph-select" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
         '</div>'+
         '<div class="item-filter">'+
             '<span class="sub-title-filter">Rating: </span>'+
-            '<select id="rating-select"><option value="ascendent">Ascendent</option><option value="descendent">Descendent</option></select>'+
+            '<select id="rating-select" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
         '</div>'+
         '<hr>'+
         '<span class="title-section">Genres: </span>'+
@@ -153,7 +204,8 @@ function printDetails(id){
         success: function (data) {
             
             console.log(data[0]);
-            $('#cardsContainer').empty();
+            $('#cardsContainer').hide();
+            $('#filters-shop').hide();
             $('.filters').hide();
             $('#loadingGif').empty();
             $('#details-movie').append(
@@ -184,47 +236,45 @@ function printDetails(id){
 
 function loadItems(type = "default"){
     //localStorage.setItem('movie-details',null);
-    console.log(getValuesFilters());
     numItemsShop = $('.card-shop').length;
+    var idsGenresType = "";
 
     if (idGenreOnLocalStorage == null){
-        console.log("entra if 1");
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
+        localStorage.setItem('genresChecked',null);
     }else{
-        console.log("entra if 3");
+        localStorage.setItem('genresChecked',null);
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesFilterGenres";
     }
-    if(type != "default"){
-        console.log("ENTRA AL ELSE IF");
+    if(type == "checkbox"){
+        urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesCheckBox";
+        idsGenresType = getValuesFilters();
+    }else if(type == "select"){
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesCheckBox";
     }
+    if(localStorage.getItem('genresChecked')!="null"){
+        checkGenres();
+        urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesCheckBox";
+        idsGenresType = localStorage.getItem('genresChecked');
+    }
+
+    
     $.ajax({
         type: 'GET',
         url: urlAjax,
         dataType: 'json',
         async: false,
-        data:{"limit":20,"offset":numItemsShop,"genres":idGenreOnLocalStorage,"idsGenres":getValuesFilters()},
-        success: function (data) { //$data es toda la informacion que nos retorna el ajax
-          //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
-            console.log(data);
-            console.log("data");
-            //sql: select f.* from films f inner join films_genres g on f.id = g.id_film where g.id_genre in (2)
-            //for select every films of the selected genre (in LocalStorage)
-
+        data:{"limit":20,"offset":numItemsShop,"genres":idGenreOnLocalStorage,"idsGenres":idsGenresType},
+        success: function (data) {
 
             $("#loadingGif").html(
                 
                 '<img src="module/client/view/img/loadingGif.gif" class="loading-gif" alt="Loading">'
                 
             );
-            sleep(1000);
-            
-            //$('.loading-gif').remove();
-
-           for(i = 0; i < data.length; i++){
-                
+            //sleep(1000);
+            for(i = 0; i < data.length; i++){
                 $urlCoverImage = data[i].coverimg;
-    
               
                 $("#cardsContainer").append(
                     '<div class="card-shop" id="'+data[i].id+'">'+
