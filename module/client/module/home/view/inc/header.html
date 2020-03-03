@@ -29,11 +29,25 @@
 
 </div>
 <div class="sub-header">
-    <div class="search-bar-canvas">
-        <form class="form-search">
-            <input class="search-bar-form" type="text" placeholder="Search a film" aria-label="Search">
-            <a href="#"><i class="fas fa-search"></i></a>
-        </form>
-    </div>
-    
+
+    <form class="form-search">
+        <i class="fas fa-search icon-search"></i>
+
+        <input type="text" name="search-bar" id="search-bar" placeholder="Write the name of the movie ..">
+        |
+        <div class="dropdown">
+            <div id="search-genres" class="select-search"><span class="noselect">Genres</span></div>
+            <div id="search-genres-dropdown" class="select-dropdown">
+                <div class="dropdown-wrapper"></div>
+            </div>
+        </div>
+        |
+        <select name="search-orders" id="search-orders" class="select-search">
+            <option value="date" id="order-date" data-tr="Order by Date">Order by Date</option>
+            <option value="alph" id="order-alph" data-tr="Order Alphabetically">Order Alphabetically</option>
+            <option value="rate" id="order-rate" data-tr="Order by Rating">Order by Rating</option>
+        </select>
+        |
+        <a href="#" class="search-button">Search</a>
+    </form>
 </div>

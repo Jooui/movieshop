@@ -44,6 +44,9 @@
 
     <script type="text/javascript" src="module/client/view/libraries/jqwidgets/jqxnavbar.js"></script> -->
 
+	<!-- Multiple select -->
+	<link rel="stylesheet" href="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.css">
+	<script src="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.js"></script>
 
 	<!-- OWL-CAROUSEL IMPORTS -->
 	<link rel="stylesheet" href="module/client/view/libraries/OwlCarousel/dist/assets/owl.carousel.min.css">
@@ -62,7 +65,7 @@
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>
 	<script type="text/javascript" src="module/client/view/js/functions.js"></script>
 	<script type="text/javascript" src="module/client/module/home/view/js/functions.js"></script>
-
+	<script type="text/javascript" src="module/client/module/search/controller/controller_search.js"></script>
 
 </head>
 <body>
