@@ -25,7 +25,7 @@ function validate_film(type) {
       document.formfilms.genres.focus();
       return 0;
   }
-  document.getElementById('e_release_date').innerHTML = "";
+  document.getElementById('e_genres').innerHTML = "";
 
     if (type = "create"){
       document.formfilms.submit();

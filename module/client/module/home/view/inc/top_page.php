@@ -44,16 +44,15 @@
 
     <script type="text/javascript" src="module/client/view/libraries/jqwidgets/jqxnavbar.js"></script> -->
 
-	<!-- Multiple select -->
-	<link rel="stylesheet" href="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.css">
-	<script src="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.js"></script>
-
 	<!-- OWL-CAROUSEL IMPORTS -->
 	<link rel="stylesheet" href="module/client/view/libraries/OwlCarousel/dist/assets/owl.carousel.min.css">
 	<link rel="stylesheet" href="module/client/view/libraries/OwlCarousel/dist/assets/owl.theme.default.min.css">
 	<script src="module/client/view/libraries/OwlCarousel/docs/assets/vendors/jquery.min.js"></script>
 	<script src="module/client/view/libraries/OwlCarousel/dist/owl.carousel.min.js"></script>
 
+	<!-- Multiple select -->
+	<link rel="stylesheet" href="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.css">
+	<script src="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.js"></script>
 
 	<!-- Local imports -->
 	<link href="module/client/view/css/style.css" rel="stylesheet" type="text/css"/>
