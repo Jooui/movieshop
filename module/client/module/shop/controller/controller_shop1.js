@@ -19,7 +19,6 @@ $(document).ready(function(){
 
 function backArrow(){
     $('.back-arrow').on('click', function() {
-        console.log("click");
         localStorage.setItem('movie-details',null);
         location.reload();
     });

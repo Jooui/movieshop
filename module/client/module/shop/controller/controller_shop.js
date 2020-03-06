@@ -5,6 +5,7 @@ $(document).ready(function(){
         //AQUÍ checkFilters()  EN CASO DE HABER GENEROS EN LOCALSTORAGE
         loadItems();
         loadFilters();
+        onClickGenre();
         loadItemsOnScroll();
     }else{
         printDetails(localStorage.getItem('movie-details'));
@@ -75,8 +76,8 @@ function loadItems(type = "default",mode = "alph"){
                     '</div>'
                 );
             } 
-            /*getDetails();
-            backArrow();*/
+            getDetails();
+            backArrow();
         },
         error: function(){
           console.log("error");
@@ -85,6 +86,17 @@ function loadItems(type = "default",mode = "alph"){
     
 }
 
+function saveGenresOnLS(){
+    
+}
+
+function onClickGenre(){
+    $('.genre-filter').on('click',function() {
+        saveGenresOnLS();
+        $('#cardsContainer').empty();
+        loadItems();
+    });
+}
 
 function loadFilters(){
     $('#filters-shop').append(
@@ -130,7 +142,6 @@ function loadFilters(){
 
 function getDetails(){
     $('.get-details').on('click', function() {
-        console.log("aaaa");
 
         var card = $(this).parent('.card-shop');
         var id = card.attr('id');
@@ -166,7 +177,6 @@ function printDetails(id){
         data:{"id":id},
         success: function (data) {
             
-            console.log(data[0]);
             $('#cardsContainer').hide();
             $('#filters-shop').hide();
             $('.filters').hide();
