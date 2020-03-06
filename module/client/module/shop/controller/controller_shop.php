@@ -46,9 +46,9 @@ switch($_GET['op']){
 
     break;
 
-    case 'getMoviesCheckBox';
+    case 'getMoviesFiltered';
         
-        $movies = getMoviesFiltersGenres($_GET['limit'],$_GET['offset'],$_GET['idsGenres']);
+        $movies = getMoviesFiltersGenres($_GET['limit'],$_GET['offset'],$_GET['idsGenres'],$_GET['order'],$_GET['dir']);
 
         echo json_encode($movies);
         exit;

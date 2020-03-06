@@ -34,9 +34,9 @@ function getMovie($id){
     return $query->fetchAll(PDO::FETCH_OBJ);
 }
 
-function getMoviesFiltersGenres($nlimit,$noffset,$genres){
+function getMoviesFiltersGenres($nlimit,$noffset,$genres,$order = "title",$dir = "ASC"){
     $connection = new connection();
-    $query = $connection->prepare('select distinct f.* from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.') LIMIT :a OFFSET :b');
+    $query = $connection->prepare('select distinct f.* from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.') ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
     $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
     $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
     $query->execute();             

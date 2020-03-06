@@ -18,11 +18,4 @@ $(document).ready(function(){
             card_data.removeClass('toggled-data');
         }
     });
-
-    $('.card-shop-img').on('click', function() {
-        console.log("object");
-
-
-    });
-    
 });

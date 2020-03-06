@@ -3,35 +3,50 @@ var urlAjax = "";
 $(document).ready(function(){
     if(localStorage.getItem('movie-details')=="null"){ // AL RECARGAR LA PAGINA COMPROBAR SI ESTABA EN EL DETAILS
         //AQUÍ checkFilters()  EN CASO DE HABER GENEROS EN LOCALSTORAGE
-        loadItems();
-        loadFilters();
-        onClickGenre();
-        loadItemsOnScroll();
+        loadItems(); //Show movies
+        loadFilters(); //Se cargan dinamicamente todos los filtros
+        infoButtonClick(); //Mostrar o esconder breve descipción de la pelicula
+        onClickGenre(); //Al clicar un genero
+        onOrderChange(); //Si cambia un select de order
+        toggleFilters(); //MARCA LOS FILTROS QUE ESTÁN EN LocalS, al reload page se marcan automaticamente
+        loadItemsOnScroll(); //Cargar la funcion para cargar más movies al hacer scroll (dinamicamente)
     }else{
         printDetails(localStorage.getItem('movie-details'));
     }
 });
 
 
-function loadItems(type = "default",mode = "alph"){
+function loadItems(type = "title",mode = "asc"){
+    console.log(type);
+    console.log(mode);
     numItemsShop = $('.card-shop').length; //OBTENER CUANTAS PELICULAS HAY PARA CARGAR 20 MAS
 
     //CONTROLLER PARA SABER QUE BUSCAR (HAY GENEROS?, ALGUN FILTRO ORDER SELECCIONADO?)
     if (localStorage.getItem('shop-genre')==="null"){
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
+        ajaxData = {                        
+            "limit":20,
+            "offset":numItemsShop,
+            "idsGenres":localStorage.getItem('shop-genre')
+        };
     }else{
-        urlAjax = "";
+        urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesFiltered";
+        ajaxData = {                        
+            "limit":20,
+            "offset":numItemsShop,
+            "idsGenres":localStorage.getItem('shop-genre'),
+            "order":type,
+            "dir":mode
+        };
     }
+
 
     $.ajax({
         type: 'GET',
         url: urlAjax,
         dataType: 'json',
         async: false, //,"genres":idGenreOnLocalStorage,"idsGenres":idsGenresType
-        data:{
-            "limit":20,
-            "offset":numItemsShop
-        },
+        data: ajaxData,
         success: function (data) {
             console.log(data);
             $("#loadingGif").html(
@@ -86,8 +101,59 @@ function loadItems(type = "default",mode = "alph"){
     
 }
 
+function toggleFilters(){
+    lengthGenres = $('.genre-filter').length;
+    films = $('.genre-filter');
+    LSGenres = localStorage.getItem('shop-genre').split(',');
+
+    for (let i = 0; i < LSGenres.length; i++) {
+        console.log(LSGenres[i]);
+        for (x=0; x<lengthGenres;x++){
+            if(films[x].getAttribute('id')==LSGenres[i]){
+                films[x].checked = true;
+            }
+        }
+    }
+}
+
+function infoButtonClick(){
+    $('.info-button').on('click', function() { //ABRIR INFORMACION FILM AL PULSAR BOTON INFO
+        var card_img = $(this).parent().find('.card-shop-img');
+
+        if (!card_img.hasClass('toggled')){
+            $('.card-shop-img').removeClass('toggled')
+            card_img.addClass('toggled');
+        }else{
+            card_img.removeClass('toggled');
+        }
+
+        var card_data = $(this).parent().find('.card-shop-data');
+
+        if (!card_data.hasClass('toggled-data')){
+            $('.card-shop-data').removeClass('toggled-data')
+            card_data.addClass('toggled-data');
+        }else{
+            card_data.removeClass('toggled-data');
+        }
+    });
+}
+
 function saveGenresOnLS(){
-    
+    lengthGenres = $('.genre-filter').length;
+    films = $('.genre-filter');
+    var idGenres1 = "";
+    for (x=0; x<lengthGenres;x++){
+        if(films[x].checked){
+            idGenres1 = idGenres1+films[x].getAttribute('id')+",";
+        }
+    }
+    if (idGenres1 == ""){
+        localStorage.setItem('shop-genre',null);
+        return null;
+    }
+    idGenres = idGenres1.substring(0, idGenres1.length - 1);
+    localStorage.setItem('shop-genre',idGenres);
+    return idGenres;
 }
 
 function onClickGenre(){
@@ -98,22 +164,32 @@ function onClickGenre(){
     });
 }
 
+function onOrderChange(){
+    $('.order-filter').on('change',function() {
+        console.log("FILTER CHANGED");
+        $('#cardsContainer').empty();
+        type = $(this).attr("id");
+        mode = $(this).val();
+        loadItems(type,mode);
+    });
+}
+
 function loadFilters(){
     $('#filters-shop').append(
         '<h1 class="title-filters">Filters</h1>'+
         '<hr>'+
         '<span class="title-section">Order by:</span>'+
         '<div class="item-filter">'+
-            '<span class="sub-title-filter">Release Date: </span>'+
-            '<select id="date-select" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
+            '<span class="sub-title-filter">Alphabetically: </span>'+
+            '<select id="title" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
         '</div>'+
         '<div class="item-filter">'+
-            '<span class="sub-title-filter">Alphabetically: </span>'+
-            '<select id="alph-select" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
+            '<span class="sub-title-filter">Release Date: </span>'+
+            '<select id="release_date" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
         '</div>'+
         '<div class="item-filter">'+
             '<span class="sub-title-filter">Rating: </span>'+
-            '<select id="rating-select" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
+            '<select id="score" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
         '</div>'+
         '<hr>'+
         '<span class="title-section">Genres: </span>'+
