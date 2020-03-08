@@ -13,9 +13,25 @@ function getAllMovies(){ //Get all data from Films
     
 }
 
-function getLimitMovies($nlimit,$noffset){ //Get limited data from Films by offset
+function sumVisitMovie($id){
     $connection = new connection();
-    $query = $connection->prepare('SELECT * FROM films LIMIT :a OFFSET :b');
+    $query = $connection->prepare("UPDATE films SET visits = visits + 1 WHERE id = ".$id);
+    $query->execute();
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
+function sumVisitGenre($id){
+    $connection = new connection();
+    $query = $connection->prepare("UPDATE genres SET visits = visits + 1 WHERE id = ".$id);
+    $query->execute();
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
+function getLimitMovies($nlimit,$noffset,$order = "title",$dir = "ASC"){ //Get limited data from Films by offset
+    $connection = new connection();
+    $query = $connection->prepare('SELECT * FROM films ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
     $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
     $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
     $query->execute();
@@ -36,7 +52,7 @@ function getMovie($id){
 
 function getMoviesFiltersGenres($nlimit,$noffset,$genres,$order = "title",$dir = "ASC"){
     $connection = new connection();
-    $query = $connection->prepare('select distinct f.* from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.') ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
+    $query = $connection->prepare('SELECT distinct f.* from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.') ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
     $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
     $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
     $query->execute();             
@@ -44,6 +60,15 @@ function getMoviesFiltersGenres($nlimit,$noffset,$genres,$order = "title",$dir =
     return $query->fetchAll(PDO::FETCH_OBJ);
 }
 
+function getMoviesByTitle($nlimit,$noffset,$titleMovie,$order = "title",$dir = "ASC"){
+    $connection = new connection();
+    $query = $connection->prepare('SELECT * FROM films WHERE title like "%'.$titleMovie.'%"  ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
+    $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
+    $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
+    $query->execute();             
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
 
 function getGenresOfFilm($id){
         

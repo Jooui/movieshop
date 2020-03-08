@@ -213,8 +213,8 @@
 .card-genre{
     margin-right: 30px;
     margin-bottom: 50px;
-    width: 200px;
-    height: 400px;
+    width: 400px;
+    height: 200px;
     border: 1px solid black;
     display: flex;
     justify-content: center;

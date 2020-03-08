@@ -15,5 +15,12 @@ switch($_GET['op']){
         
     break;
 
+    case 'getAutocomplete';
+    
+       $movies = getAutocomplete($_GET['text']);
+       echo json_encode($movies);
 
+       exit;
+        
+    break;
 }

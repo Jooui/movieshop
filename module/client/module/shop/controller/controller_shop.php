@@ -7,6 +7,14 @@ include ($path."module/shop/model/DAO_Shop.php");
 
 switch($_GET['op']){
 
+    case 'sumVisit';
+        sumVisitMovie($_GET['id']);
+    break;
+
+    case 'sumVisitGenre';
+        sumVisitGenre($_GET['id']);
+    break;
+
     case 'listShop';
         include("module/client/module/shop/view/shop.html");
     break;
@@ -30,7 +38,7 @@ switch($_GET['op']){
 
     case 'getMovies';
 
-        $movies = getLimitMovies($_GET['limit'],$_GET['offset']);
+        $movies = getLimitMovies($_GET['limit'],$_GET['offset'],$_GET['order'],$_GET['dir']);
 
         echo json_encode($movies);
         exit; 
@@ -55,6 +63,16 @@ switch($_GET['op']){
         
     break;
 
+    case 'getMoviesByTitle';
+        
+        $movies = getMoviesByTitle($_GET['limit'],$_GET['offset'],$_GET['titleMovie'],$_GET['order'],$_GET['dir']);
+
+        echo json_encode($movies);
+        exit;
+        
+    break;
+
+    
     default:
         include("module/client/module/shop/view/shop.html");
     break;

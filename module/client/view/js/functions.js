@@ -46,6 +46,7 @@ $(document).ready(function(){
     $('#shop').on('click', function() {
         localStorage.setItem("shop-genre",null);
         localStorage.setItem("movie-details",null);
+        localStorage.setItem("text-movie",null);
         location.href="index.php?page=shop";
     });
 

@@ -15,10 +15,23 @@ switch($_GET['op']){
 
     break;
 
+    case 'visited-movies';
+
+        $movies = getTop10VisitedFilms();
+
+        echo json_encode($movies);
+        exit;
+
+    break;
+
+    case 'sumVisitGenre';
+        sumVisitGenre($_GET['id']);
+    break;
+
     case 'get_genres_movies';
     //echo json_encode($movies);
     
-       $movies = getSixGenres();
+       $movies = getSixGenres($_GET['offset']);
        echo json_encode($movies);
 
        exit;

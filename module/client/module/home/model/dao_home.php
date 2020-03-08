@@ -9,17 +9,23 @@ function getTop10Films(){ //Get all data from Films
     $query = $connection->prepare('SELECT * FROM films ORDER BY score DESC LIMIT 10');
     $query->execute();
     $connection = null;
-    return $query->fetchAll(PDO::FETCH_OBJ);
-    
+    return $query->fetchAll(PDO::FETCH_OBJ);    
 }
 
-function getSixGenres(){ //Get all data from Films
+function getTop10VisitedFilms(){ //Get all data from Films
     $connection = new connection();
-    $query = $connection->prepare('SELECT * FROM genres LIMIT 6');
+    $query = $connection->prepare('SELECT * FROM films ORDER BY visits DESC LIMIT 10');
     $query->execute();
     $connection = null;
     return $query->fetchAll(PDO::FETCH_OBJ);
-    
+}
+
+function getSixGenres($offset){ //Get all data from Films
+    $connection = new connection();
+    $query = $connection->prepare('SELECT * FROM genres LIMIT 3 OFFSET '.$offset);
+    $query->execute();
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
 }
 
 function getUsertype(){ //Get actual user
@@ -28,6 +34,14 @@ function getUsertype(){ //Get actual user
     $query->execute();
     $connection = null;
     return $query->fetchAll(PDO::FETCH_OBJ); 
+}
+
+function sumVisitGenre($id){
+    $connection = new connection();
+    $query = $connection->prepare("UPDATE genres SET visits = visits + 1 WHERE id = ".$id);
+    $query->execute();
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
 }
 
 function changeUsertype(){//(TITLE, DIRECTOR, DATE)

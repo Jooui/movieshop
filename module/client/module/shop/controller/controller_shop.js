@@ -23,12 +23,31 @@ function loadItems(type = "title",mode = "asc"){
 
     //CONTROLLER PARA SABER QUE BUSCAR (HAY GENEROS?, ALGUN FILTRO ORDER SELECCIONADO?)
     if (localStorage.getItem('shop-genre')==="null"){
-        urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
-        ajaxData = {                        
-            "limit":20,
-            "offset":numItemsShop,
-            "idsGenres":localStorage.getItem('shop-genre')
-        };
+        console.log("1");
+        console.log(localStorage.getItem('mode'));
+        console.log("fin");
+        if (!localStorage.hasOwnProperty('type') || !localStorage.hasOwnProperty('mode')){
+            console.log("1.1");
+            urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
+            ajaxData = {                        
+                "limit":20,
+                "offset":numItemsShop,
+                "idsGenres":localStorage.getItem('shop-genre'),
+                "order":"title",
+                "dir":"asc"
+            };
+        }else{
+            console.log("1.2");
+            urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
+            ajaxData = {                        
+                "limit":20,
+                "offset":numItemsShop,
+                "idsGenres":localStorage.getItem('shop-genre'),
+                "order":localStorage.getItem('type'),
+                "dir":localStorage.getItem('mode')
+            };
+        }
+        
     }else{
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesFiltered";
         ajaxData = {                        
@@ -40,6 +59,16 @@ function loadItems(type = "title",mode = "asc"){
         };
     }
 
+    if (localStorage.getItem('text-movie')!=="null"){
+        urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesByTitle";
+        ajaxData = {                        
+            "limit":20,
+            "offset":numItemsShop,
+            "titleMovie":localStorage.getItem('text-movie'),
+            "order":"title",
+            "dir":"asc"
+        };
+    }
 
     $.ajax({
         type: 'GET',
@@ -55,42 +84,49 @@ function loadItems(type = "title",mode = "asc"){
                 
             );
             //sleep(1000);
-            for(i = 0; i < data.length; i++){
-                $urlCoverImage = data[i].coverimg;
-              
+            if (data.length == 0){
                 $("#cardsContainer").append(
-                    '<div class="card-shop" id="'+data[i].id+'">'+
-                        '<div class="card-shop-img get-details">'+
-                           ' <img class="img-size" src="'+$urlCoverImage+'">'+
-    
-                        '</div>'+
-                        '<div class="card-shop-data">'+
-                            '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</p>'+
-                        '</div>'+
-                        '<div class="info-button" id="info-button">'+
-                            '<i class="fa fa-bars"></i>'+
-                        '</div>'+
-    
-                        '<div class="card-shop-footer get-details">'+
-                            '<div class="effect-3d"></div>'+
-                            '<div class="card-footer-text">'+
-                                '<span>'+data[i].title+'</span>'+
-    
-                                '<div class="card-rate">'+
-                                    '<strong>'+
-                                       ' <i class="fa fa-fw fa-star"></i>'+
-                                       data[i].score+' / 10'+
-                                    '</strong>'+
-                                   '<div class="likes-card">'+
-                                        '<i class="fas fa-heart"></i>'+
-                                        '<span>7593</span>'+
+                    '<span>NO SE HA ENCONTRADO NINGUN RESULTADO</span>'
+                );
+            }else{
+                for(i = 0; i < data.length; i++){
+                    $urlCoverImage = data[i].coverimg;
+                  
+                    $("#cardsContainer").append(
+                        '<div class="card-shop" id="'+data[i].id+'">'+
+                            '<div class="card-shop-img get-details">'+
+                               ' <img class="img-size" src="'+$urlCoverImage+'">'+
+        
+                            '</div>'+
+                            '<div class="card-shop-data">'+
+                                '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</p>'+
+                            '</div>'+
+                            '<div class="info-button" id="info-button">'+
+                                '<i class="fa fa-bars"></i>'+
+                            '</div>'+
+        
+                            '<div class="card-shop-footer get-details">'+
+                                '<div class="effect-3d"></div>'+
+                                '<div class="card-footer-text">'+
+                                    '<span>'+data[i].title+'</span>'+
+        
+                                    '<div class="card-rate">'+
+                                        '<strong>'+
+                                           ' <i class="fa fa-fw fa-star"></i>'+
+                                           data[i].score+' / 10'+
+                                        '</strong>'+
+                                       '<div class="likes-card">'+
+                                            '<i class="far fa-eye"></i>'+
+                                            '<span>'+data[i].visits+'</span>'+
+                                        '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
-                        '</div>'+
-                    '</div>'
-                );
-            } 
+                        '</div>'
+                    );
+                } 
+            }
+            
             getDetails();
             backArrow();
         },
@@ -106,13 +142,43 @@ function toggleFilters(){
     films = $('.genre-filter');
     LSGenres = localStorage.getItem('shop-genre').split(',');
 
-    for (let i = 0; i < LSGenres.length; i++) {
+    for (let i = 0; i < LSGenres.length; i++) { //toggle genres
         console.log(LSGenres[i]);
         for (x=0; x<lengthGenres;x++){
             if(films[x].getAttribute('id')==LSGenres[i]){
                 films[x].checked = true;
             }
         }
+    }
+
+    switch (localStorage.getItem('type')) {
+        case "title":
+            $("#release_date").val('asc');
+            $("#score").val('asc');
+            $("#visits").val('asc');
+            $("#title").val(localStorage.getItem('mode'));
+            break;
+        
+        case "release_date":
+            $("#title").val('asc');
+            $("#score").val('asc');
+            $("#visits").val('asc');
+            $("#release_date").val(localStorage.getItem('mode'));
+            break;
+        
+        case "score":
+            $("#title").val('asc');
+            $("#release_date").val('asc');
+            $("#visits").val('asc');
+            $("#score").val(localStorage.getItem('mode'));
+            break;
+
+        case "visits":
+            $("#title").val('asc');
+            $("#release_date").val('asc');
+            $("#score").val('asc');
+            $("#visits").val(localStorage.getItem('mode'));
+            break;
     }
 }
 
@@ -158,6 +224,17 @@ function saveGenresOnLS(){
 
 function onClickGenre(){
     $('.genre-filter').on('click',function() {
+        id = $(this).attr('id');
+        localStorage.setItem("text-movie",null);
+        $.ajax({
+            type: 'GET',
+            url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=sumVisitGenre",
+            async: false,
+            data:{"id":id},
+            error: function(data) {
+                console.log(data);
+            }
+        });
         saveGenresOnLS();
         $('#cardsContainer').empty();
         loadItems();
@@ -166,17 +243,24 @@ function onClickGenre(){
 
 function onOrderChange(){
     $('.order-filter').on('change',function() {
-        console.log("FILTER CHANGED");
         $('#cardsContainer').empty();
         type = $(this).attr("id");
         mode = $(this).val();
-        loadItems(type,mode);
+        localStorage.setItem('type',type);
+        localStorage.setItem('mode',mode);
+        toggleFilters();
+        loadItems();
     });
 }
 
 function loadFilters(){
     $('#filters-shop').append(
         '<h1 class="title-filters">Filters</h1>'+
+        '<hr>'+
+        '<div class="item-filter">'+
+            '<input type="text" name="search-bar" id="search-bar-filter" placeholder="Write the name of the movie .." autocomplete="off">'+
+            '<a href="#" class="button-search-filter" >search</a>'+
+        '</div>'+
         '<hr>'+
         '<span class="title-section">Order by:</span>'+
         '<div class="item-filter">'+
@@ -190,6 +274,10 @@ function loadFilters(){
         '<div class="item-filter">'+
             '<span class="sub-title-filter">Rating: </span>'+
             '<select id="score" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
+        '</div>'+
+        '<div class="item-filter">'+
+            '<span class="sub-title-filter">Visits: </span>'+
+            '<select id="visits" class="order-filter"><option value="asc">Ascendent</option><option value="desc">Descendent</option></select>'+
         '</div>'+
         '<hr>'+
         '<span class="title-section">Genres: </span>'+
@@ -245,6 +333,17 @@ function backArrow(){
 }
 
 function printDetails(id){
+
+    $.ajax({
+        type: 'GET',
+        url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=sumVisit",
+        async: false,
+        data:{"id":id},
+        error: function(data) {
+            console.log(data);
+        }
+    });
+
     $.ajax({
         type: 'GET',
         url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovieById",
@@ -267,6 +366,7 @@ function printDetails(id){
                             '<div class="flex-row-center"><span data-tr="score">Score: </span><span>'+data[0].score+'</span></div>'+
                             '<div class="flex-row-center"><span data-tr="Date:">Date: </span><span>'+data[0].release_date+'</span></div>'+
                             '<div class="flex-row-center"><span data-tr="Genres:">Genres: </span><span>'+data[0].genres+'</span></div>'+
+                            '<div class="flex-row-center"><span data-tr="Visits:">Visits: </span><span>'+data[0].visits+'</span></div>'+
                         '</div>'+
                         
                         "<div class='details-right'>"+

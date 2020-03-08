@@ -72,7 +72,7 @@
     margin-right: -10px;
     width: 114%;
     color: rgb(241, 241, 241);
-    background-color: #009688;
+    background-color: #272727;
     left: 0;
 }
 
@@ -94,7 +94,7 @@
     top: -200px;
     border-style: solid;
     border-width: 0 0 18px 23px;
-    border-color: transparent transparent #00534b transparent;
+    border-color: transparent transparent #444444 transparent;
 }
 
 .likes-card{
@@ -109,7 +109,7 @@
 }
 
 .likes-card i{
-    color: rgb(209, 44, 44);
+    color: rgb(19, 19, 19);
     font-size: 20px;
 }
 
