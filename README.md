@@ -58,6 +58,14 @@ The application is divided into two important modules, the administrator panel a
 ## APIs
 * [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/tutorial?hl=es)
 
+## Other Technologies
+* [DataTables](https://datatables.net/)
+* [JQWidgets](https://www.jqwidgets.com/)
+* [OWLCarousel](https://owlcarousel2.github.io/OwlCarousel2/)
+* [FontAwesome](https://fontawesome.com/)
+* [Bootstrap](https://getbootstrap.com/)
+* [Multiple-Select](http://multiple-select.wenzhixin.net.cn/)
+* [Dropzone](https://www.dropzonejs.com/)
 
 ## File Structure Summary
 ```bash
