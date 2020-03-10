@@ -50,6 +50,14 @@ function getMovie($id){
     return $query->fetchAll(PDO::FETCH_OBJ);
 }
 
+function countAllMovies(){
+    $connection = new connection();
+    $query = $connection->prepare('SELECT count(*) as total FROM films');
+    $query->execute();             
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
 function getMoviesFiltersGenres($nlimit,$noffset,$genres,$order = "title",$dir = "ASC"){
     $connection = new connection();
     $query = $connection->prepare('SELECT distinct f.* from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.') ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');

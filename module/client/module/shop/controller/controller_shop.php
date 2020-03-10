@@ -72,6 +72,14 @@ switch($_GET['op']){
         
     break;
 
+    case 'countAllMovies';
+        
+        $movies = countAllMovies();
+
+        echo json_encode($movies[0]->total);
+        exit;
+        
+    break;
     
     default:
         include("module/client/module/shop/view/shop.html");

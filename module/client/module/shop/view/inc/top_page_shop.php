@@ -25,6 +25,7 @@
 	<!-- Multiple select -->
 	<link rel="stylesheet" href="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.css">
 	<script src="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.js"></script>
+	<script src="module/client/view/libraries/jquery.bootpag.min.js"></script>
 
 	<!-- Local imports -->
 	<link href="module/client/view/css/style.css" rel="stylesheet" type="text/css" />

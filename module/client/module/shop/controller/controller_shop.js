@@ -1,7 +1,8 @@
 var urlAjax = "";
-
+var numItemsShop = 0;
 $(document).ready(function(){
     if(localStorage.getItem('movie-details')=="null"){ // AL RECARGAR LA PAGINA COMPROBAR SI ESTABA EN EL DETAILS
+        numItemsShop = 0;
         //AQUÍ checkFilters()  EN CASO DE HABER GENEROS EN LOCALSTORAGE
         loadItems(); //Show movies
         loadFilters(); //Se cargan dinamicamente todos los filtros
@@ -10,24 +11,48 @@ $(document).ready(function(){
         onOrderChange(); //Si cambia un select de order
         toggleFilters(); //MARCA LOS FILTROS QUE ESTÁN EN LocalS, al reload page se marcan automaticamente
         loadItemsOnScroll(); //Cargar la funcion para cargar más movies al hacer scroll (dinamicamente)
+        
     }else{
         printDetails(localStorage.getItem('movie-details'));
     }
+    console.log(getPages());
+    console.log("AQUI");
+    $('#page-selection').bootpag({
+        total: getPages()
+    }).on("page", function(event, num){
+        $("#cardsContainer").empty();
+        console.log(num);
+
+        loadItems();
+    });
 });
 
+function getPages(){
+    $.ajax({
+        type: 'GET',
+        url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=countAllMovies",
+        async: false,
+        data:{},
+
+        success: function (data) {
+            result = data.substring(1, data.length-1);
+            total = parseInt(result);
+            ret = Math.ceil(total/40);
+            console.log(ret);
+        },
+
+        error: function(data) {
+            console.log(data);
+        }
+    });
+    return ret;
+}
 
 function loadItems(type = "title",mode = "asc"){
-    console.log(type);
-    console.log(mode);
-    numItemsShop = $('.card-shop').length; //OBTENER CUANTAS PELICULAS HAY PARA CARGAR 20 MAS
-
+    //numItemsShop = $('.card-shop').length; //OBTENER CUANTAS PELICULAS HAY PARA CARGAR 20 MAS
     //CONTROLLER PARA SABER QUE BUSCAR (HAY GENEROS?, ALGUN FILTRO ORDER SELECCIONADO?)
     if (localStorage.getItem('shop-genre')==="null"){
-        console.log("1");
-        console.log(localStorage.getItem('mode'));
-        console.log("fin");
         if (!localStorage.hasOwnProperty('type') || !localStorage.hasOwnProperty('mode')){
-            console.log("1.1");
             urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
             ajaxData = {                        
                 "limit":20,
@@ -37,7 +62,6 @@ function loadItems(type = "title",mode = "asc"){
                 "dir":"asc"
             };
         }else{
-            console.log("1.2");
             urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
             ajaxData = {                        
                 "limit":20,
@@ -60,8 +84,6 @@ function loadItems(type = "title",mode = "asc"){
     }
 
     if (localStorage.getItem('text-movie')!=="null"){
-        console.log("fff:")
-
         $("#search-bar").val(localStorage.getItem('text-movie'));
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesByTitle";
         ajaxData = {                        
@@ -80,7 +102,6 @@ function loadItems(type = "title",mode = "asc"){
         async: false, //,"genres":idGenreOnLocalStorage,"idsGenres":idsGenresType
         data: ajaxData,
         success: function (data) {
-            console.log(data);
             $("#loadingGif").html(
                 
                 '<img src="module/client/view/img/loadingGif.gif" class="loading-gif" alt="Loading">'
@@ -129,7 +150,7 @@ function loadItems(type = "title",mode = "asc"){
                     );
                 } 
             }
-            
+            numItemsShop = numItemsShop + data.length;
             getDetails();
             backArrow();
         },
@@ -146,7 +167,6 @@ function toggleFilters(){
     LSGenres = localStorage.getItem('shop-genre').split(',');
 
     for (let i = 0; i < LSGenres.length; i++) { //toggle genres
-        console.log(LSGenres[i]);
         for (x=0; x<lengthGenres;x++){
             if(films[x].getAttribute('id')==LSGenres[i]){
                 films[x].checked = true;
@@ -324,7 +344,6 @@ function loadItemsOnScroll(){
 
 function backArrow(){
     $('.back-arrow').on('click', function() {
-        console.log("click");
         localStorage.setItem('movie-details',null);
         location.reload();
     });
