@@ -22,6 +22,10 @@
     <script type="text/javascript" src="module/client/view/libraries/jquery/jquery-ui.js"></script>
 	<link rel="stylesheet" href="module/client/view/libraries/jquery/jquery-ui-smoothness.css" type="text/css">
 
+	<!-- Multiple select -->
+	<link rel="stylesheet" href="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.css">
+	<script src="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.js"></script>
+
 	<!-- Local imports -->
 	<link href="module/client/view/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="module/client/module/shop/view/css/header.css" rel="stylesheet" type="text/css" />
@@ -29,12 +33,14 @@
 	<link href="module/client/module/shop/view/css/details.css" rel="stylesheet" type="text/css" />
 	<link href="module/client/module/shop/view/css/filters.css" rel="stylesheet" type="text/css" />
 	<link href="module/client/module/shop/view/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="module/client/module/home/view/css/search-bar.css" rel="stylesheet" type="text/css"/>
 
+	<script src="module/client/module/search/controller/controller_search.js"></script>
 	<script src="module/client/module/shop/controller/controller_shop.js"></script>
 	<script src="module/client/module/shop/view/js/shop-cards.js"></script>
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>
 	<script type="text/javascript" src="module/client/view/js/functions.js"></script>
 
-
+	
 </head>
 <body>

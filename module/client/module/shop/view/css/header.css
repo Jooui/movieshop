@@ -33,7 +33,7 @@ header{
 }
 
 .header-pull-right{
-    width: 60%;
+    width: 100%;
     justify-content: flex-end;
     height: 100%;
     display: flex;
@@ -85,6 +85,7 @@ header{
     /* width: 100px; */
     height: 100px;
 }
+
 
 /* .sub-header {
     text-align: center;

@@ -60,6 +60,9 @@ function loadItems(type = "title",mode = "asc"){
     }
 
     if (localStorage.getItem('text-movie')!=="null"){
+        console.log("fff:")
+
+        $("#search-bar").val(localStorage.getItem('text-movie'));
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesByTitle";
         ajaxData = {                        
             "limit":20,
@@ -256,11 +259,6 @@ function onOrderChange(){
 function loadFilters(){
     $('#filters-shop').append(
         '<h1 class="title-filters">Filters</h1>'+
-        '<hr>'+
-        '<div class="item-filter">'+
-            '<input type="text" name="search-bar" id="search-bar-filter" placeholder="Write the name of the movie .." autocomplete="off">'+
-            '<a href="#" class="button-search-filter" >search</a>'+
-        '</div>'+
         '<hr>'+
         '<span class="title-section">Order by:</span>'+
         '<div class="item-filter">'+

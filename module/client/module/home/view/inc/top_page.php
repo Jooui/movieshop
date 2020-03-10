@@ -56,6 +56,7 @@
 
 	<!-- Local imports -->
 	<link href="module/client/view/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="module/client/module/home/view/css/search-bar.css" rel="stylesheet" type="text/css"/>
 	<link href="module/client/module/home/view/css/header.css" rel="stylesheet" type="text/css"/>
 	<!-- <link href="module/client/view/css/flex-cards.css" rel="stylesheet" type="text/css" />
 	<link href="module/client/view/css/material-cards.css" rel="stylesheet" type="text/css" /> -->

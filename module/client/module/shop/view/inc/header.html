@@ -7,13 +7,6 @@
             <span><a href="index.php">VideoShop</a></span>
         </div>
 
-        <div class="search-bar-canvas">
-            <form class="form-search">
-                <input class="search-bar-form" type="text" placeholder="Search a film" aria-label="Search">
-                <a href="#"><i class="fas fa-search"></i></a>
-            </form>
-        </div>
-
         <div class="header-pull-right">
             <a id="shop" class="header-button" href="#" data-tr="Shop"></a>
 
@@ -37,5 +30,16 @@
 </div>
 <div class="filters">
     
+    <div class="form-all">
+        <form class="form-search">
+            <i class="fas fa-search icon-search"></i>
+    
+            <input type="text" name="search-bar" id="search-bar" placeholder="Write the name of the movie .." autocomplete="off">
+            |
+            <select id="genres" class="" name = 'genres[]' multiple="multiple"></select>
+            <a href="#" class="search-button">Search</a>
+        </form>
+        <div class="autocomplete-div"></div>
+    </div>
     
 </div>

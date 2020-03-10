@@ -92,7 +92,7 @@ function randomGenre(){
 
 function generateDummies(){
   
-    for ($i = 0; $i < 100; $i++){
+    for ($i = 0; $i < 20; $i++){
       
         $data = [
             "title" => randomTitle(),

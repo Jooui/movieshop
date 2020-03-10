@@ -22,7 +22,7 @@ function getTop10VisitedFilms(){ //Get all data from Films
 
 function getSixGenres($offset){ //Get all data from Films
     $connection = new connection();
-    $query = $connection->prepare('SELECT * FROM genres LIMIT 3 OFFSET '.$offset);
+    $query = $connection->prepare('SELECT * FROM genres ORDER BY visits DESC LIMIT 3 OFFSET '.$offset);
     $query->execute();
     $connection = null;
     return $query->fetchAll(PDO::FETCH_OBJ);

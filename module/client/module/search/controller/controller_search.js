@@ -51,7 +51,6 @@ function autocomplete(){
         $( "#search-bar" ).keyup(function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if(keycode == '13'){
-                console.log("bbb");
                 if ($('#search-bar').val() == ""){
                     localStorage.setItem('text-movie',null);
                     getCheckedGenres();

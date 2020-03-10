@@ -32,6 +32,8 @@ function loadRatesMovies(){
             }
             $('.movie-carousel').on('click', function() {
                 id = $(this).attr('id');
+                localStorage.setItem('text-movie',null);
+                localStorage.setItem('shop-genre',null);
                 localStorage.setItem('movie-details',id);
                 location.href="index.php?page=shop";
             });
@@ -63,7 +65,7 @@ function getGenresMovies(){
             for(i = 0; i < data.length; i++){
                 $("#canvas-card-genres").append(
                     '<div class="card-genre" id="'+data[i].id+'">'+
-                        '<span class="card-genre-title">'+data[i].genre+'</span>'+
+                        '<span class="card-genre-title">'+data[i].genre+" "+data[i].visits+'</span>'+
                     '</div>'
                 );
             }
