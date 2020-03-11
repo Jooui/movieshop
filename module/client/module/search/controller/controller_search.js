@@ -31,15 +31,26 @@ function loadGenres(){
 
 function onClicks(){
     $('.search-button').on('click', function() {
-        if ($('#search-bar').val() == ""){
-            localStorage.setItem('text-movie',null);
-            getCheckedGenres();
-            location.href="index.php?page=shop"; 
-        }else{
-            localStorage.setItem('shop-genre',null);
-            localStorage.setItem('text-movie',$('#search-bar').val());
+        console.log(getCheckedGenres());
+        console.log($('#search-bar').val());
+        if ($('#search-bar').val() == ""  && getCheckedGenres() ==""){
+            console.log("NULL TODO");
+            localStorage.setItem("shop-genre",null);
+            localStorage.setItem("movie-details",null);
+            localStorage.setItem("text-movie",null);
             location.href="index.php?page=shop";
+        }else {
+            if ($('#search-bar').val() == ""){
+                localStorage.setItem('text-movie',null);
+                getCheckedGenres();
+                location.href="index.php?page=shop"; 
+            }else{
+                localStorage.setItem('shop-genre',null);
+                localStorage.setItem('text-movie',$('#search-bar').val());
+                location.href="index.php?page=shop";
+            }
         }
+        
     });
 }
 
@@ -129,4 +140,5 @@ function getCheckedGenres(){
     }
     checkedGenres = checkedGenres1.substring(0, checkedGenres1.length - 1);
     localStorage.setItem('shop-genre',checkedGenres);
+    return checkedGenres;
 }
