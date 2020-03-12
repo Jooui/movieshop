@@ -45,9 +45,17 @@ function loadRatesMovies(){
     });
 }
 
-function onClickMoreGenres(){
-    $('#load-more-genres').on('click', function() {
-        getGenresMovies();
+// function onClickMoreGenres(){
+//     $('#load-more-genres').on('click', function() {
+//         getGenresMovies();
+//     });
+// }
+
+function loadGenresOnScroll(){
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            getGenresMovies();
+        }
     });
 }
 
@@ -168,11 +176,11 @@ function loadVisitedMovies(){
 
         loadRatesMovies();
 
-        onClickMoreGenres();
-
         loadVisitedMovies()
         
         getGenresMovies();
+
+        loadGenresOnScroll();
         
         owlCarousel();
 
