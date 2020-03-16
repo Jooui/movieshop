@@ -43,6 +43,10 @@ $(document).ready(function(){
         location.href="index.php?page=contact";
     });
 
+    $('#header-register').on('click', function() {
+        location.href="index.php?page=register";
+    });
+
     $('#shop').on('click', function() {
         localStorage.setItem("shop-genre",null);
         localStorage.setItem("movie-details",null);

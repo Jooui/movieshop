@@ -97,6 +97,11 @@
     border-color: transparent transparent #444444 transparent;
 }
 
+#canvas-api-movies{
+    display: flex;
+    flex-direction: row;
+}
+
 .likes-card{
     float: right;
     

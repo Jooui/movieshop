@@ -68,6 +68,14 @@ function getMoviesFiltersGenres($nlimit,$noffset,$genres,$order = "title",$dir =
     return $query->fetchAll(PDO::FETCH_OBJ);
 }
 
+function getMoviesFiltersGenresCount($genres){
+    $connection = new connection();
+    $query = $connection->prepare('SELECT count(*) as total from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.')');
+    $query->execute();             
+    $connection = null;
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
 function getMoviesByTitle($nlimit,$noffset,$titleMovie,$order = "title",$dir = "ASC"){
     $connection = new connection();
     $query = $connection->prepare('SELECT * FROM films WHERE title like "%'.$titleMovie.'%"  ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');

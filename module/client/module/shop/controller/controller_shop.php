@@ -63,6 +63,15 @@ switch($_GET['op']){
         
     break;
 
+    case 'getMoviesFilteredCount';
+        
+        $movies = getMoviesFiltersGenresCount($_GET['idsGenres']);
+
+        echo json_encode($movies[0]->total);
+        exit;
+        
+    break;
+
     case 'getMoviesByTitle';
         
         $movies = getMoviesByTitle($_GET['limit'],$_GET['offset'],$_GET['titleMovie'],$_GET['order'],$_GET['dir']);

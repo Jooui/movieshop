@@ -1,5 +1,8 @@
 var urlAjax = "";
 var numItemsShop = 0;
+var actualPage = 0;
+var lengthMovies = 0;
+
 $(document).ready(function(){
     if(localStorage.getItem('movie-details')=="null"){ // AL RECARGAR LA PAGINA COMPROBAR SI ESTABA EN EL DETAILS
         numItemsShop = 0;
@@ -10,47 +13,18 @@ $(document).ready(function(){
         onClickGenre(); //Al clicar un genero
         onOrderChange(); //Si cambia un select de order
         toggleFilters(); //MARCA LOS FILTROS QUE ESTÁN EN LocalS, al reload page se marcan automaticamente
-        loadItemsOnScroll(); //Cargar la funcion para cargar más movies al hacer scroll (dinamicamente)
-        
+        //loadItemsOnScroll(); //Cargar la funcion para cargar más movies al hacer scroll (dinamicamente)
+        bootpagCFG();
     }else{
         printDetails(localStorage.getItem('movie-details'));
     }
-    console.log(getPages());
-    console.log("AQUI");
-    $('#page-selection').bootpag({
-        total: getPages()
-    }).on("page", function(event, num){
-        $("#cardsContainer").empty();
-        console.log(num);
-
-        loadItems();
-    });
+    
 });
-
-function getPages(){
-    $.ajax({
-        type: 'GET',
-        url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=countAllMovies",
-        async: false,
-        data:{},
-
-        success: function (data) {
-            result = data.substring(1, data.length-1);
-            total = parseInt(result);
-            ret = Math.ceil(total/40);
-            console.log(ret);
-        },
-
-        error: function(data) {
-            console.log(data);
-        }
-    });
-    return ret;
-}
 
 function loadItems(type = "title",mode = "asc"){
     //numItemsShop = $('.card-shop').length; //OBTENER CUANTAS PELICULAS HAY PARA CARGAR 20 MAS
     //CONTROLLER PARA SABER QUE BUSCAR (HAY GENEROS?, ALGUN FILTRO ORDER SELECCIONADO?)
+    numItemsShop = (20*actualPage);
     if (localStorage.getItem('shop-genre')==="null"){
         if (!localStorage.hasOwnProperty('type') || !localStorage.hasOwnProperty('mode')){
             urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
@@ -73,6 +47,7 @@ function loadItems(type = "title",mode = "asc"){
         }
         
     }else{
+        getPages("genres");
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesFiltered";
         ajaxData = {                        
             "limit":20,
@@ -150,7 +125,7 @@ function loadItems(type = "title",mode = "asc"){
                     );
                 } 
             }
-            numItemsShop = numItemsShop + data.length;
+            //numItemsShop = numItemsShop + data.length;
             getDetails();
             backArrow();
         },
@@ -159,6 +134,48 @@ function loadItems(type = "title",mode = "asc"){
         }
     });
     
+}
+
+function getPages(type = ""){
+    var urlPages = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=countAllMovies"
+    ajaxData = {};
+    if (localStorage.getItem('shop-genre')!=="null"){
+        urlPages = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesFilteredCount";
+        ajaxData = {                        
+            "idsGenres":localStorage.getItem('shop-genre'),
+        };
+    }
+    $.ajax({
+        type: 'GET',
+        url: urlPages,
+        async: false,
+        data: ajaxData,
+
+        success: function (data) {
+            result = data.substring(1, data.length-1);
+            total = parseInt(result);
+            ret = Math.ceil(total/20);
+        },
+
+        error: function(data) {
+            console.log(data);
+        }
+    });
+    return ret;
+}
+
+function bootpagCFG(){
+    $('#page-selection').bootpag({
+        total: getPages()
+    }).on("page", function(event, num){
+        $("#cardsContainer").empty();
+        console.log(num);
+        actualPage = (num-1);
+        loadItems();
+    });
+    $('#page-selection').on('click',function() {
+        $("html, body").animate({ scrollTop: 0 }, "medium");
+    });
 }
 
 function toggleFilters(){
@@ -247,6 +264,7 @@ function saveGenresOnLS(){
 
 function onClickGenre(){
     $('.genre-filter').on('click',function() {
+        actualPage = 0;
         id = $(this).attr('id');
         localStorage.setItem("text-movie",null);
         $.ajax({
@@ -259,8 +277,10 @@ function onClickGenre(){
             }
         });
         saveGenresOnLS();
-        $('#cardsContainer').empty();
-        loadItems();
+        // $('#cardsContainer').empty();
+        // loadItems();
+        location.reload();
+        
     });
 }
 
@@ -334,19 +354,38 @@ function getDetails(){
     });
 }
 
-function loadItemsOnScroll(){
+/*function loadItemsOnScroll(){
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
             loadItems();
         }
     });
-}
+}*/
 
 function backArrow(){
     $('.back-arrow').on('click', function() {
         localStorage.setItem('movie-details',null);
         location.reload();
     });
+}
+
+var getApiMovies = function(urlTitle) {
+    title = urlTitle.split(' ').join('+');
+    return new Promise(function(resolve, reject){
+        $.ajax({
+            type: 'GET',
+            url: 'http://www.omdbapi.com/?s='+title+'&apikey='+API_OMDb+'&plot=full',
+            dataType: 'json',
+        })
+        .done(function(data){
+            console.log(data);
+            resolve(data);
+        })
+        .fail(function(data){
+            console.log(data);
+            reject("Error");
+        });
+    })
 }
 
 function printDetails(id){
@@ -372,6 +411,7 @@ function printDetails(id){
             $('#cardsContainer').hide();
             $('#filters-shop').hide();
             $('.filters').hide();
+            $('#page-selection').hide();
             $('#loadingGif').empty();
             $('#details-movie').append(
                     '<i class="fas fa-arrow-left back-arrow"></i>'+
@@ -390,8 +430,30 @@ function printDetails(id){
                             "<h1 id='title-movie'>"+data[0].title+"</h1>"+
                             '<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>'+
                         "</div>"+
-                    "</div>"
+                    "</div>"+
+                    '<br>'+
+                    '<h3>Similar Films</h3>'+
+                    '<div id="canvas-api-movies"></div>'
             );
+
+            getApiMovies("harry potter").then(function(data){
+                console.log(data);
+                for(i = 0; i < 5; i++){
+                    $("#canvas-api-movies").append(
+                        '<div class="item movie-carousel card-api-movie" id="'+data.Search[i].imdbID+'">'+
+        
+                            '<img src="'+data.Search[i].Poster+'">'+
+                            '<div class="canvas-score">'+
+                                '<span class="score-movie-carousel"> <i class="fas fa-star score-star"></i>0</span>'+
+                            '</div>'+
+                            '<div class="footer-item">'+
+                                '<span class="movie-title-footer">'+data.Search[i].Title+'</span>'+
+                            '</div>'+
+                            '<br> <span>'+data.Search[i].title+'</span>'+
+                        '</div>'
+                    );
+                }
+            });
             backArrow();
         },
         error: function(data) {

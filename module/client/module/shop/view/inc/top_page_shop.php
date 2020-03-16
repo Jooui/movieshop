@@ -36,6 +36,7 @@
 	<link href="module/client/module/shop/view/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="module/client/module/home/view/css/search-bar.css" rel="stylesheet" type="text/css"/>
 
+	<script type="text/javascript" src="module/client/view/js/apykeys.js"></script>
 	<script src="module/client/module/search/controller/controller_search.js"></script>
 	<script src="module/client/module/shop/controller/controller_shop.js"></script>
 	<script src="module/client/module/shop/view/js/shop-cards.js"></script>

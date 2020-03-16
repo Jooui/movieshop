@@ -45,16 +45,50 @@ function loadRatesMovies(){
     });
 }
 
-// function onClickMoreGenres(){
-//     $('#load-more-genres').on('click', function() {
-//         getGenresMovies();
-//     });
-// }
-
 function loadGenresOnScroll(){
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
             getGenresMovies();
+        }
+    });
+}
+
+var getApiMovies = function(urlTitle) {
+    title = urlTitle.split(' ').join('+');
+    return new Promise(function(resolve, reject){
+        $.ajax({
+            type: 'GET',
+            url: 'http://www.omdbapi.com/?s='+title+'&apikey='+API_OMDb+'&plot=full',
+            dataType: 'json',
+        })
+        .done(function(data){
+            console.log(data);
+            resolve(data);
+        })
+        .fail(function(data){
+            console.log(data);
+            reject("Error");
+        });
+    })
+}
+
+function apiMovies(){
+
+    getApiMovies("The lord of the rings").then(function(data){
+        for(i = 0; i < 5; i++){
+            $("#canvas-api-movies").append(
+                '<div class="item movie-carousel card-api-movie" id="'+data.Search[i].imdbID+'">'+
+
+                    '<img src="'+data.Search[i].Poster+'">'+
+                    '<div class="canvas-score">'+
+                        '<span class="score-movie-carousel"> <i class="fas fa-star score-star"></i>0</span>'+
+                    '</div>'+
+                    '<div class="footer-item">'+
+                        '<span class="movie-title-footer">'+data.Search[i].Title+'</span>'+
+                    '</div>'+
+                    '<br> <span>'+data.Search[i].title+'</span>'+
+                '</div>'
+            );
         }
     });
 }
@@ -179,6 +213,8 @@ function loadVisitedMovies(){
         loadVisitedMovies()
         
         getGenresMovies();
+
+        apiMovies();
 
         loadGenresOnScroll();
         
