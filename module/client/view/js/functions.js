@@ -44,7 +44,7 @@ $(document).ready(function(){
     });
 
     $('#header-register').on('click', function() {
-        location.href="index.php?page=register";
+        location.href="index.php?page=login";
     });
 
     $('#shop').on('click', function() {

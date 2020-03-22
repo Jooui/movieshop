@@ -24,7 +24,7 @@ if (isset($_GET['page'])){
 		case "contact";
 			include($path."module/contact/view/contact.html");
 			break;
-		case "contact";
+		case "login";
 			include($path."module/login/view/login.html");
 			break;
 		default;
