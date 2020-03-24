@@ -14,7 +14,7 @@ $(document).ready(function(){
         });
         
         // console.log(scrollTop);
-    });*/
+    });
 
     //FUNCTION FOR CHANGE THE LENGTH OF BORDER-BOTTOM
     /*$( "#header-login" ).hover(
@@ -54,6 +54,34 @@ $(document).ready(function(){
         location.href="index.php?page=shop";
     });
 
+    $('#header-logout').on('click', function() {
+        console.log("logout");
+        $.ajax({
+            type: 'GET',
+            url: '/movieshop/module/client/module/login/controller/controller_login.php?op=logout',
+            dataType: 'json',
+            data:{},
+            success: function (data) {
+                if(data=='logout'){
+                    localStorage.removeItem('user_id');
+                    localStorage.removeItem('user_avatar');
+                    localStorage.removeItem('user_type');
+
+                    location.href="index.php";
+                }else{
+                    location.href="index.php?page=503";
+                    console.log('error');
+                }
+                
+            },
+            error: function(){
+                location.href="index.php?page=503";
+                console.log('error');
+            }
+        });
+        
+    });
+
     $('#header-login').on('click', function() {
 
         $.ajax({
@@ -62,12 +90,12 @@ $(document).ready(function(){
             dataType: 'json',
             async: false,
             data:{},
-            success: function (data) { //$data es toda la informacion que nos retorna el ajax
-              //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
+            success: function () { //$data es toda la informacion que nos retorna el ajax
                 location.href="index.php";
             },
             error: function(){
-              console.log("error");
+                location.href="index.php?page=503";
+                console.log('error');
             }
         });
         

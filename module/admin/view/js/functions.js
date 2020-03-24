@@ -3,6 +3,7 @@ $( document ).ready(function() {
     
 
     $( '#menu-login' ).on( "click", function() {
+        console.log("ss");
         $.ajax({
             type: 'GET',
             url: '/movieshop/module/admin/module/films/controller/controller_films.php?op=usertype',
@@ -10,9 +11,10 @@ $( document ).ready(function() {
             
             
             done: function (data) { //$data es toda la informacion que nos retorna el ajax
-              //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
-              console.log("hola");
-                location.href="index.php";
+                //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
+                console.log("hola");
+                console.log(data);
+                //location.href="index.php";
             },
             error: function(){
                 console.log("hola_error");
@@ -20,6 +22,27 @@ $( document ).ready(function() {
                 location.href="index.php";
             }
         });
+    });
+
+    $( '#btn-logout' ).on( "click", function() {
+        location.href='index.php?page=controller_films&op=logout';
+        // $.ajax({
+        //     type: 'GET',
+        //     url: '/movieshop/module/admin/module/films/controller/controller_films.php?op=logout',
+        //     dataType: 'json',
+            
+        //     done: function (data) { //$data es toda la informacion que nos retorna el ajax
+        //       //console.log(data[0]); data[0] porque (return $query->fetchAll(PDO::FETCH_OBJ);) retorna en array, al ser 1 hay que poner [0]
+        //       console.log("hola");
+        //       console.log(data);
+        //         // location.href="index.php";
+        //     },
+        //     error: function(){
+        //         console.log("error_logout");
+
+        //         location.href="index.php";
+        //     }
+        // });
     });
     var dropdown = document.getElementsByClassName("dropdown_button");
 

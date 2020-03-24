@@ -89,12 +89,17 @@ function validateLogin(){
         return 0;
     }else{
         var data = $("#formLogin").serialize();
+        console.log(data);
         ajaxLoginUser(data).then(function(data){
             var result = JSON.parse(data);
-        
+            console.log(data);
+            console.log(result);
             if (result.result){
                 //location.reload();
                 console.log("LOGGED");
+                console.log(result.data);
+                setLocalSUserInfo(result.data);
+                location.href="index.php";
                 $('#e_email_login').html("");
                 $('#e_passwd_login').html("");
             }else{
@@ -112,6 +117,12 @@ function validateLogin(){
     }
 }
 
+function setLocalSUserInfo(data){
+    localStorage.setItem('user_id',data.id);
+    localStorage.setItem('user_avatar',data.avatar);
+    localStorage.setItem('user_type',data.type);
+    console.log(data.email);
+}
 
 function validateRegister(){
     var e = 0;

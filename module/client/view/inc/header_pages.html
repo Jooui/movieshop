@@ -12,7 +12,7 @@
 
             <a id="contact-us" class="header-button" href="#" data-tr="Contact Us"></a>
 
-            <a id="header-login" class="header-button" href=# data-tr="Login">Iniciar Sesion</a>
+            <a id="header-register" class="header-button" href=# data-tr="Login"></a>
             
             <div class="lang-div">
                     <select name="Language" id="lang" class="form-control form-control-sm">
@@ -28,12 +28,18 @@
     
 
 </div>
-<div class="sub-header">
-    <div class="search-bar-canvas">
+<div class="filters">
+    
+    <div class="form-all">
         <form class="form-search">
-            <input class="search-bar-form" type="text" placeholder="Search a film" aria-label="Search">
-            <a href="#"><i class="fas fa-search"></i></a>
+            <i class="fas fa-search icon-search"></i>
+    
+            <input type="text" name="search-bar" id="search-bar" placeholder="Write the name of the movie .." autocomplete="off">
+            |
+            <select id="genres" class="" name = 'genres[]' multiple="multiple"></select>
+            <a href="#" class="search-button">Search</a>
         </form>
+        <div class="autocomplete-div"></div>
     </div>
     
 </div>

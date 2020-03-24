@@ -19,11 +19,21 @@ if (isset($_GET['page'])){
 <!-- <body>  -->
 		<header>
 			<?php 
-			if (!isset($_GET['page'])){
-				include("module/client/module/home/view/inc/header.html"); 
+			if (isset($_SESSION['id'])){
+				
+				if (!isset($_GET['page'])){
+					include("module/client/module/home/view/inc/header_home_user.html"); 
+				}else{
+					include("module/client/view/inc/header_user.html");
+				}
 			}else{
-				include("module/client/module/".$_GET['page']."/view/inc/header.html"); 
-			}?>
+				if (!isset($_GET['page'])){
+					include("module/client/module/home/view/inc/header_home.html"); 
+				}else{
+					include("module/client/view/inc/header_pages.html"); 
+				}
+			}
+			?>
 		</header>
 
 		<main>

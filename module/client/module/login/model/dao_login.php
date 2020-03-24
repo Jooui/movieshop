@@ -44,6 +44,24 @@
         }
     }
 
+    function userInfoSession($email){
+        $connection = new connection();
+        $query = $connection->prepare('SELECT id,username,email,type,avatar FROM users WHERE email = :email');
+        $query->bindParam(':email', $email);
+        $query->execute();             
+        $connection = null;
+        return $query->fetchAll(PDO::FETCH_OBJ);
+
+
+        $connection = new connection();
+        $query = $connection->prepare('SELECT id,username,email,"type",avatar FROM users WHERE email = :email');
+        $query->bindParam(':email', $email);
+        $query->execute();
+        $data = $query->fetch();
+        $connection = null;
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
     function verifyPasswd($password,$email){
         $connection = new connection();
         $query = $connection->prepare('SELECT password FROM users WHERE email = :email');

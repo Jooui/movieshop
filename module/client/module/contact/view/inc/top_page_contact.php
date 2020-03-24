@@ -25,14 +25,21 @@
 	<!-- API Keys -->
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFH2cZ9auX0pFzikPfaJgkJuQFS5EsDUM&callback=initMap"type="text/javascript"></script>
 
+	<!-- Multiple select -->
+	<link rel="stylesheet" href="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.css">
+	<script src="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.js"></script>
+
 	<!-- Local imports -->
 	<link href="module/client/module/contact/view/css/header.css" rel="stylesheet" type="text/css"/>
     <link href="module/client/view/css/style.css" rel="stylesheet" type="text/css"/>
 	<link href="module/client/module/contact/view/css/style_contact.css" rel="stylesheet" type="text/css"/>
+	<link href="module/client/module/home/view/css/search-bar.css" rel="stylesheet" type="text/css"/>
+
+	
 	<script type="text/javascript" src="module/client/module/contact/view/js/maps.js"></script>
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>
 	<script type="text/javascript" src="module/client/view/js/functions.js"></script>
-
+	<script type="text/javascript" src="module/client/module/search/controller/controller_search.js"></script>
 
 </head>
 <body>

@@ -48,6 +48,11 @@
             <span data-tr="Client View" class="no-minibar"></span>
         </div>
 
+        <div class="button_VerticalMenu_canvas" id="btn-logout">
+            <i class="fas fa-sign-out-alt big_icon"></i>
+            <span data-tr="Logout" class="no-minibar"></span>
+        </div>
+
     </div>
 	
     

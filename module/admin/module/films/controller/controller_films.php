@@ -45,13 +45,14 @@
         break;
 
         case 'usertype';
-        
-            changeUsertype();
-            $callback="index.php";
-            Browser::redirect($callback);
-            die;
-            echo json_encode("true");
+        echo json_encode("aaa");
             exit;
+            // changeUsertype();
+            // $callback="index.php";
+            // Browser::redirect($callback);
+            // die;
+            // echo json_encode("true");
+            // exit;
 
         break;
 
@@ -149,6 +150,16 @@
             include("module/admin/module/films/view/edit_film.php");
             break;
             
+        case 'logout';
+            // session_unset($_SESSION['type']);
+            // session_unset($_SESSION['id']);
+            session_destroy();
+            $callback="index.php?";
+            Browser::redirect($callback);
+            //echo json_encode($_SESSION['type']);
+            exit;
+        break;
+
         case 'view';
             /*if(findById($_GET['id'])==false){
                 $callback = 'index.php?page=503';

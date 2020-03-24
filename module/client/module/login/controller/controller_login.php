@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $path = $_SERVER['DOCUMENT_ROOT'].'/movieshop/module/client/';
 include ($path."module/login/model/dao_login.php");
 
@@ -34,10 +34,18 @@ switch($_GET['op']){
             exit;
         }
     break;
+
+    case 'logout';
+        unset($_SESSION['id']);
+        unset($_SESSION['type']);
+        echo json_encode('logout');
+        exit;
+    break;
 }
 
-function saveSessionUser(){
-    
+function saveSessionUser($data){
+    $_SESSION['id'] = $data['id'];
+    $_SESSION['type'] = $data['type'];
 }
 
 function validateLoginUser(){
@@ -49,14 +57,21 @@ function validateLoginUser(){
     if (verifyPasswd($_POST['passwd-user'],$_POST['email-user'])==false){
         return $return=array('result'=>false,'errorPassword'=>'Incorrect password');
     }
-
+    $info = userInfoSession($_POST['email-user']);
     $result = array(
 
-        'email' => $_POST['email-user'],
+        'email' => $info[0]->email,
 
-        'password' => $_POST['passwd-user'],
+        'username' => $info[0]->username,
+
+        'id' => $info[0]->id,
+
+        'type' => $info[0]->type,
+        
+        'avatar' => $info[0]->avatar,
 
     );
+
     return $return=array('result'=>true,'data'=>$result);
 }
 
