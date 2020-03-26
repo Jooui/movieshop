@@ -29,6 +29,7 @@
 
 	<script type="text/javascript" src="module/client/view/js/apykeys.js"></script>
 	<script type="text/javascript" src="module/client/module/login/controller/controller_login.js"></script>
+	<script type="text/javascript" src="module/client/module/login/model/activity.js"></script>
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>
 	<script type="text/javascript" src="module/client/view/js/functions.js"></script>
 	<script type="text/javascript" src="module/client/module/search/controller/controller_search.js"></script>

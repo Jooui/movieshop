@@ -41,6 +41,31 @@ switch($_GET['op']){
         echo json_encode('logout');
         exit;
     break;
+
+    case 'checkSession';
+        if (isset( $_SESSION['id']) && isset( $_SESSION['type'])){
+            $LS_id = $_POST['id'];  //VARs in Local Storage
+            $LS_type = $_POST['type'];
+            $id_session = $_SESSION['id'];
+            $type_session = $_SESSION['type'];
+    
+            if ($LS_id == $id_session && $LS_type == $type_session){
+                echo json_encode('true');
+                exit;
+            }else{
+                unset($_SESSION['id']);
+                unset($_SESSION['type']);
+                echo json_encode('false');
+                exit;
+            }
+        }else{
+            unset($_SESSION['id']);
+            unset($_SESSION['type']);
+            echo json_encode('false');
+            exit;
+        }
+        
+    break;
 }
 
 function saveSessionUser($data){

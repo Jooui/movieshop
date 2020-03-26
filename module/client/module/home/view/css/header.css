@@ -39,6 +39,8 @@ header{
     display: table;
     padding: 0 30px;
     height: 60px;
+    background-color: #212121e8;
+    box-shadow: 0px 0px 5px 0px #000000;
 }
 .header-button{
     width: 135px;
