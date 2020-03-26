@@ -42,6 +42,21 @@ switch($_GET['op']){
         exit;
     break;
 
+    case 'regenerateSessionID';
+        try {
+            session_start();
+            $old_id = session_id();
+            session_regenerate_id();
+            $new_id = session_id();
+            echo json_encode('ok');
+            exit;
+        } catch ( Exception $e ) {
+            echo json_encode('error');
+            exit;
+        }
+        
+    break;
+
     case 'checkSession';
         if (isset( $_SESSION['id']) && isset( $_SESSION['type'])){
             $LS_id = $_POST['id'];  //VARs in Local Storage
