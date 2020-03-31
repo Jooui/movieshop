@@ -27,6 +27,7 @@ function loadItems(type = "title",mode = "asc"){
     numItemsShop = (20*actualPage);
     if (localStorage.getItem('shop-genre')==="null"){
         if (!localStorage.hasOwnProperty('type') || !localStorage.hasOwnProperty('mode')){
+            console.log("1");
             urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
             ajaxData = {                        
                 "limit":20,
@@ -36,6 +37,7 @@ function loadItems(type = "title",mode = "asc"){
                 "dir":"asc"
             };
         }else{
+            console.log("2");
             urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMovies";
             ajaxData = {                        
                 "limit":20,
@@ -47,6 +49,7 @@ function loadItems(type = "title",mode = "asc"){
         }
         
     }else{
+        console.log("3");
         getPages("genres");
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesFiltered";
         ajaxData = {                        
@@ -59,6 +62,7 @@ function loadItems(type = "title",mode = "asc"){
     }
 
     if (localStorage.getItem('text-movie')!=="null"){
+        console.log("4");
         $("#search-bar").val(localStorage.getItem('text-movie'));
         urlAjax = "/movieshop/module/client/module/shop/controller/controller_shop.php?op=getMoviesByTitle";
         ajaxData = {                        
@@ -100,6 +104,13 @@ function loadItems(type = "title",mode = "asc"){
                             '<div class="card-shop-data">'+
                                 '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</p>'+
                             '</div>'+
+                            '<div class="favs-movie">'+
+                                            // if (checkFavUser(data[i].id,$(this)){
+
+                                            // }
+                                            '<i class="fas fa-heart fav-shop"></i>'+
+                                            '<span>'+data[i].favs+'</span>'+
+                                        '</div>'+
                             '<div class="info-button" id="info-button">'+
                                 '<i class="fa fa-bars"></i>'+
                             '</div>'+
@@ -107,11 +118,14 @@ function loadItems(type = "title",mode = "asc"){
                             '<div class="card-shop-footer get-details">'+
                                 '<div class="effect-3d"></div>'+
                                 '<div class="card-footer-text">'+
-                                    '<span>'+data[i].title+'</span>'+
+                                    '<div class="top-footer-card">'+
+                                        '<span>'+data[i].title+'</span>'+
+                                        
+                                    '</div>'+
         
                                     '<div class="card-rate">'+
                                         '<strong>'+
-                                           ' <i class="fa fa-fw fa-star"></i>'+
+                                           '<i class="fa fa-fw fa-star"></i>'+
                                            data[i].score+' / 10'+
                                         '</strong>'+
                                        '<div class="likes-card">'+
@@ -123,17 +137,85 @@ function loadItems(type = "title",mode = "asc"){
                             '</div>'+
                         '</div>'
                     );
+                    checkFavUser(data[i].id,$('#'+data[i].id+' .favs-movie i'));
                 } 
             }
             //numItemsShop = numItemsShop + data.length;
+
             getDetails();
+            favClick();
             backArrow();
         },
         error: function(){
           console.log("error");
         }
     });
-    
+}
+
+function checkFavUser(id_movie,favItem){
+    if (localStorage.getItem('user_id') !== null && localStorage.getItem('user_type') !== null){ //comprobar que el usuario esté logueado
+        $.ajax({
+            type: 'GET',
+            url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=checkFavUser",
+            data: {"id_movie":id_movie,"id_user":localStorage.getItem('user_id')},
+            dataType: 'json',
+            success: function (data) {
+                if (data == true){
+                    favItem.addClass('fav-toggled');
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    }
+}
+
+function favClick(){
+    $('.fav-shop').on('click', function() {
+        var p1 = $(this).parent();
+        var parent = p1.parent();
+        var parentID = parent.attr('id')
+        var spanText = p1.children('span').text();
+        var integer = parseInt(spanText, 10)
+
+        if (localStorage.getItem('user_id') !== null && localStorage.getItem('user_type') !== null){ //comprobar que el usuario esté logueado
+            if ($(this).hasClass("fav-toggled")){
+                $.ajax({
+                    type: 'POST',
+                    url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=removeFav",
+                    data: {"id_movie":parentID,"id_user":localStorage.getItem('user_id')},
+                    success: function () {
+                        // $(this).removeClass("fav-toggled");
+                        console.log("QUITADO");
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+                $(this).removeClass("fav-toggled");
+                p1.children('span').text(integer-1);
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=addFav",
+                    data: {"id_movie":parentID,"id_user":localStorage.getItem('user_id')},
+                    success: function () {
+                        // $(this).addClass("fav-toggled");
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+                $(this).addClass("fav-toggled");
+                p1.children('span').text(integer+1);
+            }
+        }else{
+            alert('You have to be logged!');
+            location.href='index.php?page=login';
+        }
+        
+    });
 }
 
 function getPages(type = ""){

@@ -52,8 +52,6 @@
     background-color: #00675d;
 }
 
-
-
 .card-shop-data p{
     padding: 15px 15px 15px 15px;
     color: white;
@@ -65,6 +63,10 @@
     display: block;
 }
 
+.fav-toggled{
+    color: red !important;
+}
+
 .card-shop-footer{
     bottom: 0;
     height: 70px;
@@ -74,6 +76,26 @@
     color: rgb(241, 241, 241);
     background-color: #272727;
     left: 0;
+}
+
+.top-footer-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.favs-movie{
+    font-weight: bold;
+    margin-top: 4px;
+    margin-right: 18px;
+}
+
+.fav-shop:hover{
+    color: red;
+}
+
+.favs-movie i{
+    margin-right: 5px;
 }
 
 .card-shop-footer span{

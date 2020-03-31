@@ -44,7 +44,7 @@ switch($_GET['op']){
 
     case 'regenerateSessionID';
         try {
-            session_start();
+            if(session_status() !== PHP_SESSION_ACTIVE) session_start();
             $old_id = session_id();
             session_regenerate_id();
             $new_id = session_id();

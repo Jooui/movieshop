@@ -15,6 +15,22 @@ switch($_GET['op']){
         sumVisitGenre($_GET['id']);
     break;
 
+    case 'addFav';
+        addFav($_POST['id_movie'],$_POST['id_user']);
+    break;
+
+    case 'checkFavUser';
+       $fav = checkFavUser($_GET['id_movie'],$_GET['id_user']);
+        // echo json_encode($fav);
+        // exit;
+        echo json_encode($fav);
+        exit;
+    break;
+
+    case 'removeFav';
+        removeFav($_POST['id_movie'],$_POST['id_user']);
+    break;
+
     case 'listShop';
         include("module/client/module/shop/view/shop.html");
     break;

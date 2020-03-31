@@ -4,10 +4,8 @@ $(document).ready(function(){
 });
 
 function regenerateSession(){
-    console.log('entra regeg_session');
     if (localStorage.getItem('user_id') !== null && localStorage.getItem('user_type') !== null){ //comprobar que el usuario esté logueado
         regenerateSessionID().then(function(data){
-            console.log(data);
             if (data === '"error"'){
                 localStorage.removeItem('user_id');
                 localStorage.removeItem('user_avatar');
@@ -19,18 +17,13 @@ function regenerateSession(){
 }
 
 function checkLocalSwithSession(){ //comprobar que los credenciales en localstorage coincidan con los del session.
-    console.log("entra en function");
     data = {                        
         "id":localStorage.getItem('user_id'),
         "type":localStorage.getItem('user_type')
     };
     checkSession(data).then(function(data){
-        console.log('resuelve promise:');
-        console.log(data);
         if (data === '"false"'){
-            console.log('entra en if: checkSession.then');
             if (localStorage.getItem('user_id') === null || localStorage.getItem('user_type') === null){ //comprobar que el usuario esté logueado
-                console.log("algun null en LS");
                 localStorage.removeItem('user_id');
                 localStorage.removeItem('user_avatar');
                 localStorage.removeItem('user_type');
@@ -42,8 +35,6 @@ function checkLocalSwithSession(){ //comprobar que los credenciales en localstor
                 alert('You have done something suspicious 🤨');
             }
             
-        }else{
-            console.log('entra else');
         }
     });
 

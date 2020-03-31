@@ -13,6 +13,38 @@ function getAllMovies(){ //Get all data from Films
     
 }
 
+function addFav($id_movie,$id_user){
+    $connection = new connection();
+    $query = $connection->prepare('INSERT INTO user_favorites_movies (id_movie, id_user) VALUES (:id_movie, :id_user)');
+    $query->bindParam(':id_movie', $id_movie);
+    $query->bindParam(':id_user', $id_user);
+    $query->execute();
+}
+
+function removeFav($id_movie,$id_user){
+    $connection = new connection();
+    $query = $connection->prepare('DELETE FROM user_favorites_movies WHERE id_movie = :id_movie AND id_user = :id_user');
+    $query->bindParam(':id_movie', $id_movie);
+    $query->bindParam(':id_user', $id_user);
+    $query->execute();
+}
+
+function checkFavUser($id_movie, $id_user){
+    $connection = new connection();
+    $query = $connection->prepare('SELECT * FROM user_favorites_movies WHERE id_movie = :id_movie AND id_user = :id_user');
+    $query->bindParam(':id_movie', $id_movie);
+    $query->bindParam(':id_user', $id_user);
+    $query->execute();
+    $data = $query->fetch();
+    $connection = null;
+    if ($data){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 function sumVisitMovie($id){
     $connection = new connection();
     $query = $connection->prepare("UPDATE films SET visits = visits + 1 WHERE id = ".$id);
@@ -31,7 +63,7 @@ function sumVisitGenre($id){
 
 function getLimitMovies($nlimit,$noffset,$order = "title",$dir = "ASC"){ //Get limited data from Films by offset
     $connection = new connection();
-    $query = $connection->prepare('SELECT * FROM films ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
+    $query = $connection->prepare('SELECT *,(SELECT COUNT(*) FROM user_favorites_movies WHERE id_movie=f.id) as favs FROM films f ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
     $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
     $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
     $query->execute();
@@ -60,7 +92,7 @@ function countAllMovies(){
 
 function getMoviesFiltersGenres($nlimit,$noffset,$genres,$order = "title",$dir = "ASC"){
     $connection = new connection();
-    $query = $connection->prepare('SELECT distinct f.* from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.') ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
+    $query = $connection->prepare('SELECT distinct f.*,(SELECT COUNT(*) FROM user_favorites_movies WHERE id_movie=f.id) as favs from films_genres r inner join films f on r.id_film = f.id and r.id_genre in ('.$genres.') ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
     $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
     $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
     $query->execute();             
@@ -78,7 +110,7 @@ function getMoviesFiltersGenresCount($genres){
 
 function getMoviesByTitle($nlimit,$noffset,$titleMovie,$order = "title",$dir = "ASC"){
     $connection = new connection();
-    $query = $connection->prepare('SELECT * FROM films WHERE title like "%'.$titleMovie.'%"  ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
+    $query = $connection->prepare('SELECT *,(SELECT COUNT(*) FROM user_favorites_movies WHERE id_movie=f.id) as favs FROM films f WHERE title like "%'.$titleMovie.'%"  ORDER BY '.$order.' '.$dir.' LIMIT :a OFFSET :b');
     $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
     $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
     $query->execute();             
@@ -127,7 +159,7 @@ function getMovieById($id){
 function getLimitMoviesByGenre($nlimit,$noffset,$genres){ //Get limited data filtered by genres
     $connection = new connection();
     $genreToString = $genres."";
-    $query = $connection->prepare('SELECT f.*,g.id_genre from films f inner join films_genres g on f.id = g.id_film where g.id_genre in ('.$genreToString.') LIMIT :a OFFSET :b');
+    $query = $connection->prepare('SELECT f.*,g.id_genre,(SELECT COUNT(*) FROM user_favorites_movies WHERE id_movie=f.id) as favs from films f inner join films_genres g on f.id = g.id_film where g.id_genre in ('.$genreToString.') LIMIT :a OFFSET :b');
     $query->bindValue(':a', (int) $nlimit, PDO::PARAM_INT);
     $query->bindValue(':b', (int) $noffset, PDO::PARAM_INT);
     $query->execute();
