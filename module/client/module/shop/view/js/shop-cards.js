@@ -18,4 +18,42 @@ $(document).ready(function(){
             card_data.removeClass('toggled-data');
         }
     });
+    hoverCard();
 });
+
+    function hoverCard(){
+        $('.card-shop-img').hover( function(){
+            $('.buttons-card').css({
+                visibility:"visible"
+            });
+            $('.black-card').css({
+                visibility:"visible",
+            });
+        }, function() {
+            $('.buttons-card').css({
+                visibility:"hidden"
+            });
+            $('.black-card').css({
+                visibility:"hidden",
+            });
+        });
+        $('.buttons-card').hover( function(){
+            $('.buttons-card').css({
+                visibility:"visible"
+            });
+            $('.black-card').css({
+                visibility:"visible",
+            });
+        }, function() {
+            $('.buttons-card').css({
+                visibility:"hidden"
+            });
+            $('.black-card').css({
+                visibility:"hidden",
+            });
+        });
+        	
+        // $('.card-shop-img').off( function(){
+
+        // });
+    }

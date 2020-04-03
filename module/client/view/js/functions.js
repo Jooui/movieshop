@@ -47,6 +47,10 @@ $(document).ready(function(){
         location.href="index.php?page=login";
     });
 
+    $('#header-cart').on('click', function() {
+        location.href="index.php?page=cart";
+    });
+
     $('#shop').on('click', function() {
         localStorage.setItem("shop-genre",null);
         localStorage.setItem("movie-details",null);

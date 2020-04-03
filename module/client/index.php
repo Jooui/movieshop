@@ -10,6 +10,9 @@ if (isset($_GET['page'])){
 		case "login":
 			include("module/login/view/inc/top_page_login.php");
 		break;
+		case "cart":
+			include("module/cart/view/inc/top_page_cart.php");
+		break;
 	}
 }else{
 	include("module/home/view/inc/top_page.php");

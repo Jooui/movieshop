@@ -190,8 +190,12 @@
     cursor: pointer;
     top: 100px !important;
   }
-  
 
+
+#header-cart i{
+    font-size: 20px;
+    margin-left: 10px;
+}
   
 .owl-carousel .prev-slide{
     left: -50px;

@@ -97,20 +97,24 @@ function loadItems(type = "title",mode = "asc"){
                   
                     $("#cardsContainer").append(
                         '<div class="card-shop" id="'+data[i].id+'">'+
+                            '<div class="buttons-card">'+
+                                '<a id="" class="card-button btn-card-cart" href="#"><span data-tr="Add to cart"></span></a>'+
+                                '<a id="" class="card-button btn-card-view" href="#"><span data-tr="View"></span></a>'+
+                            '</div>'+
+
                             '<div class="card-shop-img get-details">'+
+                                '<div class="black-card"></div>'+
                                ' <img class="img-size" src="'+$urlCoverImage+'">'+
         
                             '</div>'+
+                            
                             '<div class="card-shop-data">'+
                                 '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</p>'+
                             '</div>'+
                             '<div class="favs-movie">'+
-                                            // if (checkFavUser(data[i].id,$(this)){
-
-                                            // }
-                                            '<i class="fas fa-heart fav-shop"></i>'+
-                                            '<span>'+data[i].favs+'</span>'+
-                                        '</div>'+
+                                '<i class="fas fa-heart fav-shop"></i>'+
+                                '<span>'+data[i].favs+'</span>'+
+                            '</div>'+
                             '<div class="info-button" id="info-button">'+
                                 '<i class="fa fa-bars"></i>'+
                             '</div>'+
@@ -145,6 +149,7 @@ function loadItems(type = "title",mode = "asc"){
             getDetails();
             favClick();
             backArrow();
+            onClickBtn();
         },
         error: function(){
           console.log("error");
@@ -169,6 +174,33 @@ function checkFavUser(id_movie,favItem){
             }
         });
     }
+}
+
+function onClickBtn(){
+    $('.btn-card-cart').on('click', function() {
+        var card1 = $(this).parent();
+        var card = card1.parent('.card-shop');
+        var id = card.attr('id');
+        if (localStorage.getItem("cart-items") === null) {
+            array_items = [id];
+            localStorage.setItem("cart-items",array_items);
+        }else{
+            array_items = localStorage.getItem('cart-items').split(',');
+            array_items.push(id);
+            localStorage.setItem("cart-items",array_items);
+        }
+        console.log("cart");
+    });
+
+    $('.btn-card-view').on('click', function() {
+        var card1 = $(this).parent();
+        var card = card1.parent('.card-shop');
+        var id = card.attr('id');
+        console.log(id);
+        localStorage.setItem('movie-details',id);
+        
+        printDetails(id);
+    });
 }
 
 function favClick(){
@@ -475,7 +507,6 @@ function printDetails(id){
     $.ajax({
         type: 'GET',
         url: "/movieshop/module/client/module/shop/controller/controller_shop.php?op=sumVisit",
-        async: false,
         data:{"id":id},
         error: function(data) {
             console.log(data);

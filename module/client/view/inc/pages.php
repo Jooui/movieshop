@@ -27,6 +27,9 @@ if (isset($_GET['page'])){
 		case "login";
 			include($path."module/login/view/login.html");
 			break;
+		case "cart";
+			include($path."module/cart/view/cart.html");
+			break;
 		default;
 			include($path."module/home/view/homepage.html");
 			break;
