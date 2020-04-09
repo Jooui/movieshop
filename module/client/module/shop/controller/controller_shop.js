@@ -98,7 +98,7 @@ function loadItems(type = "title",mode = "asc"){
                     $("#cardsContainer").append(
                         '<div class="card-shop" id="'+data[i].id+'">'+
                             '<div class="buttons-card">'+
-                                '<a id="" class="card-button btn-card-cart" href="#"><span data-tr="Add to cart"></span></a>'+
+                                '<a id="" class="card-button btn-card-cart"><span data-tr="Add to cart"></span></a>'+
                                 '<a id="" class="card-button btn-card-view" href="#"><span data-tr="View"></span></a>'+
                             '</div>'+
 
@@ -181,7 +181,7 @@ function onClickBtn(){
         var card1 = $(this).parent();
         var card = card1.parent('.card-shop');
         var id = card.attr('id');
-        if (localStorage.getItem("cart-items") === null) {
+        if (localStorage.getItem("cart-items") === null || localStorage.getItem("cart-items") == "") {
             array_items = [id];
             localStorage.setItem("cart-items",array_items);
         }else{

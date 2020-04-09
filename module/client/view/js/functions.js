@@ -60,29 +60,34 @@ $(document).ready(function(){
 
     $('#header-logout').on('click', function() {
         console.log("logout");
-        $.ajax({
-            type: 'GET',
-            url: '/movieshop/module/client/module/login/controller/controller_login.php?op=logout',
-            dataType: 'json',
-            data:{},
-            success: function (data) {
-                if(data=='logout'){
-                    localStorage.removeItem('user_id');
-                    localStorage.removeItem('user_avatar');
-                    localStorage.removeItem('user_type');
-
-                    location.href="index.php";
-                }else{
-                    location.href="index.php?page=503";
-                    console.log('error');
-                }
+        $.getScript( "module/client/module/login/controller/controller_login.js", function() {
+            console.log("load"); // Data returned
+            logout();
+          });
+        
+        // $.ajax({
+        //     type: 'GET',
+        //     url: '/movieshop/module/client/module/login/controller/controller_login.php?op=logout',
+        //     dataType: 'json',
+        //     data:{},
+        //     success: function (data) {
+        //         if(data=='logout'){
+        //             localStorage.removeItem('user_id');
+        //             localStorage.removeItem('user_avatar');
+        //             localStorage.removeItem('user_type');
+        //             localStorage.removeItem('cart-items');
+        //             location.href="index.php";
+        //         }else{
+        //             location.href="index.php?page=503";
+        //             console.log('error');
+        //         }
                 
-            },
-            error: function(){
-                location.href="index.php?page=503";
-                console.log('error');
-            }
-        });
+        //     },
+        //     error: function(){
+        //         location.href="index.php?page=503";
+        //         console.log('error');
+        //     }
+        // });
         
     });
 

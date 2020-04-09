@@ -99,7 +99,7 @@ function validateLogin(){
                 console.log("LOGGED");
                 console.log(result.data);
                 setLocalSUserInfo(result.data);
-                location.href="index.php";
+                //location.href="index.php";
                 $('#e_email_login').html("");
                 $('#e_passwd_login').html("");
             }else{
@@ -121,7 +121,30 @@ function setLocalSUserInfo(data){
     localStorage.setItem('user_id',data.id);
     localStorage.setItem('user_avatar',data.avatar);
     localStorage.setItem('user_type',data.type);
+    setCartLS(data.id);
     console.log(data.email);
+}
+
+function setCartLS(id_user){
+    $.ajax({
+        type: 'GET',
+        url: '/movieshop/module/client/module/cart/controller/controller_cart.php?op=getArrayItemsBD',
+        dataType: 'json',
+        data:{"id_user":id_user},
+        success: function (data) {
+            console.log(data);
+            var items = ""; 
+            for (let x = 0; x < data.length; x++) {
+
+                for (let i = 0; i < data[x].quantity; i++) {
+                    items = items + data[x].id_item+",";
+                }
+            }
+            items = items.substring(0, items.length - 1);
+            console.log(items);
+            localStorage.setItem('cart-items',items);
+        }
+    });
 }
 
 function validateRegister(){
@@ -196,6 +219,84 @@ function validateRegister(){
 
     }
 }
+
+function itemsLSToArray(){
+    items = localStorage.getItem('cart-items').split(',');
+         
+    items.sort();
+    var arr = [];
+    var current = null;
+    var cnt = 0;
+    for (var i = 0; i < items.length; i++) {
+        if (items[i] != current) {
+            if (cnt > 0) {
+                arr.push({
+                    "id":current,"cant":cnt
+                });
+            }
+            current = items[i];
+            cnt = 1;
+        } else {
+            cnt++;
+        }
+    }
+    if (cnt > 0) {
+        arr.push({
+            "id":current,"cant":cnt
+        });
+    }
+    return arr;
+}
+
+
+function logout(){
+    $.ajax({
+        type: 'GET',
+        url: '/movieshop/module/client/module/login/controller/controller_login.php?op=logout',
+        dataType: 'json',
+        data:{},
+        success: function (data) {
+            if(data=='logout'){
+                if (localStorage.getItem('cart-items') !== null || localStorage.getItem('cart-items') != ""){
+                    console.log("entra en if: logout");
+                    var items = itemsLSToArray();
+                    ajaxSaveCart(items);
+                }
+                localStorage.removeItem('user_id');
+                localStorage.removeItem('user_avatar');
+                localStorage.removeItem('user_type');
+                localStorage.removeItem('cart-items');
+                location.href="index.php";
+            }else{
+                location.href="index.php?page=503";
+                console.log('error');
+            }
+            
+        },
+        error: function(){
+            location.href="index.php?page=503";
+            console.log('error');
+        }
+    });
+}
+
+var ajaxSaveCart = function(data) {
+    return new Promise(function(resolve, reject){
+        $.ajax({
+            data: {"items":data,"idUser":localStorage.getItem('user_id')},
+            type: 'POST',
+            url: '/movieshop/module/client/module/cart/controller/controller_cart.php?op=saveItemsCart',
+        })
+        .done(function(data){
+            resolve(data);
+        })
+        .fail(function(data){
+            console.log(data);
+            reject("Error");
+        });
+    })
+}
+
 
 var ajaxCreateUser = function(data) {
     return new Promise(function(resolve, reject){
