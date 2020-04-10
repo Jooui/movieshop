@@ -6,13 +6,14 @@
 
     function save($data){ //returns the last object created
         $connection = new connection();
-        $query = $connection->prepare('INSERT INTO ' . 'Films' . ' (title, director, release_date, score, coverimg) VALUES (:title, :director, :release_date, :score, :coverimg)');
+        $query = $connection->prepare('INSERT INTO ' . 'Films' . ' (title, director, release_date, score, coverimg, price) VALUES (:title, :director, :release_date, :score, :coverimg, :price)');
         $query->bindParam(':title', $data['datos']['title']);
         $query->bindParam(':director', $data['datos']['director']);
         $query->bindParam(':release_date', $data['datos']['release_date']);
         // $query->bindParam(':genres', $data['datos']['genres']);
         $query->bindParam(':score', $data['datos']['score']);
         $query->bindParam(':coverimg', $data['datos']['coverimg']);
+        $query->bindParam(':price', $data['datos']['price']);
         $query->execute();
 
         $query = $connection->prepare('SELECT * FROM `films` ORDER BY id DESC LIMIT 1');

@@ -34,7 +34,9 @@
     <link href="module/client/view/css/style.css" rel="stylesheet" type="text/css"/>
 	<link href="module/client/module/contact/view/css/style_contact.css" rel="stylesheet" type="text/css"/>
 	<link href="module/client/module/home/view/css/search-bar.css" rel="stylesheet" type="text/css"/>
+	<link href="module/client/module/cart/view/css/cart_header.css" rel="stylesheet" type="text/css"/>
 
+	<script type="text/javascript" src="module/client/module/cart/controller/controller_cart.js"></script>
 	<script type="text/javascript" src="module/client/module/login/model/activity.js"></script>
 	<script type="text/javascript" src="module/client/module/contact/view/js/maps.js"></script>
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>

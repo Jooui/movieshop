@@ -99,7 +99,7 @@ function validateLogin(){
                 console.log("LOGGED");
                 console.log(result.data);
                 setLocalSUserInfo(result.data);
-                //location.href="index.php";
+                location.href="index.php";
                 $('#e_email_login').html("");
                 $('#e_passwd_login').html("");
             }else{

@@ -99,7 +99,8 @@ function generateDummies(){
             "director" => randomName(),
             "release_date" => randomDate(),
             "score" => randomScore(0, 10, 2),
-            "coverimg" => random_pic()
+            "coverimg" => random_pic(),
+            "price" => randomScore(1, 50, 2)
         ];
         $return=array('datos'=>$data);
         if (findByTitle($data['title']) == false){
