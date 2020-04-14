@@ -16,6 +16,8 @@
 	<script type="text/javascript" src="module/client/view/libraries/jquery/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="module/client/view/libraries/jquery/jquery-ui.js"></script>
 	<link rel="stylesheet" href="module/client/view/libraries/jquery/jquery-ui-smoothness.css" type="text/css">
+	<link href="module/client/view/libraries/jquery/jquery-confirm.min.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="module/client/view/libraries/jquery/jquery-confirm.min.js"></script>
 
 	<!-- Multiple select -->
 	<link rel="stylesheet" href="module/admin/view/libraries/multiple-select-1.5.2/dist/multiple-select.min.css">
@@ -26,7 +28,6 @@
 	<link href="module/client/module/home/view/css/search-bar.css" rel="stylesheet" type="text/css"/>
 	<link href="module/client/module/cart/view/css/header.css" rel="stylesheet" type="text/css"/>
 	<link href="module/client/module/cart/view/css/style.css" rel="stylesheet" type="text/css"/>
-	<!-- <link href="module/client/module/cart/view/css/cart_header.css" rel="stylesheet" type="text/css"/> -->
 
 	<script type="text/javascript" src="module/client/view/js/apykeys.js"></script>
 	<script type="text/javascript" src="module/client/module/cart/controller/controller_cart.js"></script>
@@ -34,6 +35,7 @@
 	<script type="text/javascript" src="module/client/view/js/translate.js"></script>
 	<script type="text/javascript" src="module/client/view/js/functions.js"></script>
 	<script type="text/javascript" src="module/client/module/search/controller/controller_search.js"></script>
+	
 
 </head>
 <body>

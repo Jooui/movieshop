@@ -27,8 +27,29 @@ $(document).ready(function(){
             })
         }, function() {
             $(this).css({"border-bottom": "0px solid white"})
-          }
-      );*/
+        }
+    );*/
+    $('.dropbtn').css('background-image', 'url(' + localStorage.getItem('user_avatar') + ')');
+
+    $('.user-dropdown').on('click', function() {
+        $('.dropbtn').addClass('toggled');
+        $('#myDropdown').addClass('show');
+    });
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdown = $(".dropdown-content");
+            
+            if (dropdown.hasClass('show')) {
+                dropdown.removeClass('show');
+                $('.dropbtn').removeClass('toggled');
+            }
+        }
+    }
+
+    $('#header-profile').on('click', function() {
+        location.href="index.php?page=profile";
+    });
 
     $( "#header-login" ).hover(
         function() {
@@ -111,3 +132,11 @@ $(document).ready(function(){
     });
 
 });
+
+
+    
+    //document.getElementById("myDropdown").classList.toggle("show");
+    
+
+  
+  // Close the dropdown menu if the user clicks outside of it

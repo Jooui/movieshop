@@ -3,6 +3,11 @@ $(document).ready(function(){
 });
 
 function loadLogin(){
+    console.log("load");
+    if (localStorage.getItem('user_id') !== null && localStorage.getItem('user_type') !== null){ //comprobar que el usuario esté logueado
+        location.href="index.php";
+        return;
+    }
     $(".login-canvas").empty();
     $(".login-canvas").append(
         '<form class="form-login" method="post" name="formLogin" id="formLogin">'+
@@ -99,9 +104,16 @@ function validateLogin(){
                 console.log("LOGGED");
                 console.log(result.data);
                 setLocalSUserInfo(result.data);
-                location.href="index.php";
-                $('#e_email_login').html("");
-                $('#e_passwd_login').html("");
+                // if (localStorage.getItem('shop-redirect') === null || localStorage.getItem('shop-redirect')==""){
+                //     location.href="index.php";
+                //     $('#e_email_login').html("");
+                //     $('#e_passwd_login').html("");
+                // }else{
+                //     location.href="index.php?page=shop";
+                //     $('#e_email_login').html("");
+                //     $('#e_passwd_login').html("");
+                // }
+                
             }else{
                 if (result.errorEmail){
                     $('#e_email_login').html(result.errorEmail);
@@ -132,7 +144,7 @@ function setCartLS(id_user){
         dataType: 'json',
         data:{"id_user":id_user},
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             var items = ""; 
             for (let x = 0; x < data.length; x++) {
 
@@ -141,8 +153,21 @@ function setCartLS(id_user){
                 }
             }
             items = items.substring(0, items.length - 1);
-            console.log(items);
-            localStorage.setItem('cart-items',items);
+            itemsArr = items.split(',');
+            console.log(itemsArr);
+            if(localStorage.getItem('cart-items')!==null && localStorage.getItem('cart-items')!=""){
+                noLoggedItems = localStorage.getItem('cart-items').split(',');        
+                for (let j = 0; j < noLoggedItems.length; j++) {
+                    itemsArr.push(noLoggedItems[j]);                
+                }    
+            }
+            // console.log(noLoggedItems);
+            
+            
+
+            console.log(itemsArr);
+            localStorage.setItem('cart-items',itemsArr);
+            
         }
     });
 }

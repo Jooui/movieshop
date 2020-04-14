@@ -1,7 +1,6 @@
 $(document).ready(function(){
     //saveItemsOnDB();
 
-    
     if (getQueryVariable('page')=="cart"){
         loadItemsCart();
     }else{
@@ -367,27 +366,143 @@ function cartHeader(){
 
 function updateSummary(){
     console.log("updateSummary");
-    var arr = itemsLSToArray();
-    var totalPrice = 0;
-    for (let x = 0; x < arr.length; x++) {
+    saldo = getUserBalance().then(function(saldo){
         
-        getItemCart(arr[x].id).then(function(data){
-            film = JSON.parse(data)[0];
-
-            price = parseFloat((arr[x].cant * film.price),10);
-            price = Math.round(price * 100) / 100
-            totalPrice = (totalPrice + price);
-            totalPrice = Math.round(totalPrice * 100) / 100
-        });
-
-    }
-    setTimeout(function() {
-        $('.info-summary').append(
-            '<span>Total Price: '+totalPrice+'€</span>'
-        );
-    },500);
+        var arr = itemsLSToArray();
+        var totalPrice = 0;
+        for (let x = 0; x < arr.length; x++) {
+            
+            getItemCart(arr[x].id).then(function(data){
+                film = JSON.parse(data)[0];
     
+                price = parseFloat((arr[x].cant * film.price),10);
+                price = Math.round(price * 100) / 100
+                totalPrice = (totalPrice + price);
+                totalPrice = Math.round(totalPrice * 100) / 100
+            });
+    
+        }
+
+        setTimeout(function() {
+            finalSaldo = (saldo[0].saldo - totalPrice);
+            $('.info-summary').append(
+                '<span data-tr="Balance">Balance: '+saldo[0].saldo+'€</span><br>'+
+                '<span>Total Price: '+totalPrice+'€</span>'+
+                '<hr>'+
+                '<span data-tr="Balance">Final Balance: '+finalSaldo+'€</span>'+
+                ''
+            );
+        },500);
+    });
+    onPurchase();  
 }
+
+var getUserBalance = function() {
+    return new Promise(function(resolve, reject){
+        $.ajax({
+            data: {"id_user":localStorage.getItem('user_id')},
+            type: 'GET',
+            url: '/movieshop/module/client/module/cart/controller/controller_cart.php?op=getUserBalance',
+        })
+        .done(function(data){
+            return resolve(JSON.parse(data));
+            //return JSON.parse(data);
+        })
+        .fail(function(data){
+            console.log(data);
+            reject("Error");
+        });
+    })
+}
+
+function onPurchase(){
+    $('.purchase-button-summary').on('click',function(){
+        if (localStorage.getItem('user_id') === null || localStorage.getItem('user_type') === null){
+            alert('Inicia Sesión para realizar el pedido!');
+            localStorage.setItem('shop-redirect',true);
+            location.href = 'index.php?page=login';
+        }else{
+            $.confirm({
+                title: 'Purchase?',
+                content: 'You can\'t undo this action! Are you sure?',
+                buttons: {
+                    
+                    accept: {
+                        text: 'Accept',
+                        btnClass: 'btn-blue',
+                        action: function(){
+                            var items = itemsLSToArray()
+                            pushPurchase(items).then(function(data){
+                                console.log(data);
+                                if (data == "false"){
+                                    $.confirm({
+                                        title: 'ERROR!',
+                                        content: 'You don\'t have enough money',
+                                        buttons: {
+                                            
+                                            somethingElse: {
+                                                text: 'Accept',
+                                                btnClass: 'btn-blue',
+                                                
+                                                action: function(){
+                                                    location.reload();
+                                                }
+                                            }
+                                        }
+                                    });
+                                }else{
+                                    $.confirm({
+                                        title: 'SUCCESSFULLY!',
+                                        content: 'Purchase made successfully!',
+                                        buttons: {
+                                            
+                                            somethingElse: {
+                                                text: 'Accept',
+                                                btnClass: 'btn-blue',
+                                                
+                                                action: function(){
+                                                    localStorage.removeItem('cart-items');
+                                                    location.reload();
+                                                }
+                                            }
+                                        }
+                                    });
+                                }                                
+                            });
+                        }
+                    },
+        
+                    cancel: {
+                        text: 'Cancel',
+                        btnClass: 'btn-red',
+                        action: function(){
+                            $.alert('');
+                        }
+                    }
+                }
+            });
+        }
+    });
+}
+
+var pushPurchase = function(items) {
+    return new Promise(function(resolve, reject){
+        $.ajax({
+            data: {"arr_items":items,"id_user":localStorage.getItem('user_id')},
+            type: 'POST',
+            url: '/movieshop/module/client/module/cart/controller/controller_cart.php?op=pushPurchase',
+        })
+        .done(function(data){
+            console.log(data);
+            resolve(data);
+        })
+        .fail(function(data){
+            console.log(data);
+            reject("Error");
+        });
+    })
+}
+
 
 var getItemCart = function(data) {
     return new Promise(function(resolve, reject){
